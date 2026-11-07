@@ -1,4 +1,3 @@
-class_name InventoryManager
 extends Node
 ## Central Inventory Manager for "Tide & Hook"
 ## Coordinates the player's fish basket, safe chest storage, and bait supplies.

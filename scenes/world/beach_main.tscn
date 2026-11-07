@@ -136,7 +136,7 @@ position = Vector2(1190, 410)
 position = Vector2(1110, 435)
 
 [node name="FishmongerNPC" parent="World" instance=ExtResource("12_npc")]
-position = Vector2(950, 430)
+position = Vector2(680, 360)
 
 [node name="Seagull1" parent="World" instance=ExtResource("13_seagull")]
 position = Vector2(700, 320)

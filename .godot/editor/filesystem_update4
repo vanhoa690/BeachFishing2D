@@ -1,14 +1,2 @@
 res://scripts/core/game_state.gd
-res://scripts/mechanics/fish_drying_rack.gd
-res://scripts/player/player.gd
-res://scripts/ui/hud.gd
-res://scripts/world/seagull.gd
-res://scripts/core/game_events.gd
-res://scenes/ui/market_modal.tscn
-res://scenes/ui/safe_chest_modal.tscn
-res://scripts/core/economy_manager.gd
-res://scripts/core/multiplayer_market_stub.gd
-res://scripts/mechanics/safe_chest.gd
-res://scripts/ui/market_modal.gd
-res://scripts/ui/safe_chest_modal.gd
-res://scripts/world/fish_market_npc.gd
+res://scripts/ui/storage_chest_modal.gd

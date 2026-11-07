@@ -257,4 +257,3 @@ func _lock_player(locked: bool) -> void:
 		var p = players[0]
 		if "is_locked_action" in p:
 			p.is_locked_action = locked
-

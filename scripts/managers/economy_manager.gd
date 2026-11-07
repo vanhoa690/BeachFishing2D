@@ -1,11 +1,10 @@
-class_name EconomyManager
 extends Node
 ## Global Economy & Currency Manager for "Tide & Hook"
 ## Tracks player currency (Sea Coins) and handles transactions.
 
 signal coins_changed(new_amount: int)
 
-var sea_coins: int = 50:
+var sea_coins: int = 0:
 	set(value):
 		var clamped: int = maxi(0, value)
 		if sea_coins != clamped:
@@ -50,4 +49,3 @@ func serialize() -> Dictionary:
 func deserialize(data: Dictionary) -> void:
 	if data.has("sea_coins"):
 		sea_coins = int(data["sea_coins"])
-

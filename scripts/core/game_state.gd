@@ -276,4 +276,3 @@ func load_state_from_dict(data: Dictionary) -> bool:
 			caught_fish_registry.append(entry)
 
 	return true
-

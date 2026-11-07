@@ -1,0 +1,63 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3]
+
+[ext_resource type="Texture2D" uid="uid://2a5j4l1lxgsh" path="res://sprites/seagull/seagull-frame-1.png" id="1_frame1"]
+[ext_resource type="Texture2D" uid="uid://3qnbxomya7gn" path="res://sprites/seagull/seagull-frame-2.png" id="2_frame2"]
+[ext_resource type="Texture2D" uid="uid://bgwfxcrowv17y" path="res://sprites/seagull/seagull-frame-3.png" id="3_frame3"]
+[ext_resource type="Texture2D" uid="uid://dwg647tyqyn03" path="res://sprites/seagull/seagull-frame-4.png" id="4_frame4"]
+[ext_resource type="Texture2D" uid="uid://0rd2bm24pscx" path="res://sprites/seagull/seagull-frame-5.png" id="5_frame5"]
+[ext_resource type="Texture2D" uid="uid://rqtggqo63dh2" path="res://sprites/seagull/seagull-frame-6.png" id="6_frame6"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_frame1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_frame2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_frame4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_frame5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_frame6")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_frame3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_frame4")
+}],
+"loop": true,
+"name": &"glide",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_frame1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_frame2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_frame5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_frame6")
+}],
+"loop": true,
+"name": &"dive",
+"speed": 14.0
+}]
+

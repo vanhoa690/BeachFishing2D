@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/mechanics/fish_drying_rack.gd" id="1_rack"]
+[ext_resource type="Texture2D" uid="uid://da384kxlj3ceh" path="res://sprites/props/fish-drying-rack.png" id="2_rack_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
+size = Vector2(38, 10)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 34.0
+
+[node name="FishDryingRack" type="StaticBody2D" groups=["drying_rack", "interactable"]]
+z_index = 2
+y_sort_enabled = true
+collision_mask = 2
+script = ExtResource("1_rack")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+position = Vector2(0, 1)
+color = Color(0.1, 0.14, 0.18, 0.3)
+polygon = PackedVector2Array(-20, -3, -14, -6, 14, -6, 20, -3, 20, 3, 14, 6, -14, 6, -20, 3)
+
+[node name="RackSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -18)
+scale = Vector2(0.038, 0.038)
+texture = ExtResource("2_rack_tex")
+
+[node name="FishDisplay" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -20)
+rotation = 0.15
+scale = Vector2(0.045, 0.045)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_solid")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_interact")
+
+[node name="DryingParticles" type="CPUParticles2D" parent="."]
+position = Vector2(0, -20)
+emitting = false
+amount = 10
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+emission_shape = 1
+emission_sphere_radius = 8.0
+direction = Vector2(0, -1)
+spread = 60.0
+gravity = Vector2(0, -30)
+initial_velocity_min = 15.0
+initial_velocity_max = 35.0
+scale_amount_min = 1.5
+scale_amount_max = 2.5
+color = Color(0.95, 0.9, 0.75, 0.8)
+

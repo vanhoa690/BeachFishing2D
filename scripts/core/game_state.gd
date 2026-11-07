@@ -5,19 +5,22 @@ extends Node
 enum ToolType {
 	NONE = 0,
 	SHOVEL = 1,
-	FISHING_ROD = 2
+	FISHING_ROD = 2,
+	DRYING_RACK = 3
 }
 
 const TOOL_NAMES: Dictionary = {
 	ToolType.NONE: "Bare Hands",
 	ToolType.SHOVEL: "Sand Shovel",
-	ToolType.FISHING_ROD: "Bamboo Rod"
+	ToolType.FISHING_ROD: "Bamboo Rod",
+	ToolType.DRYING_RACK: "Drying Rack Kit"
 }
 
 const TOOL_DESCRIPTIONS: Dictionary = {
 	ToolType.NONE: "Use your hands to interact or inspect.",
 	ToolType.SHOVEL: "Dig for juicy sand worms near coastal mounds.",
-	ToolType.FISHING_ROD: "Cast your line into the azure sea."
+	ToolType.FISHING_ROD: "Cast your line into the azure sea.",
+	ToolType.DRYING_RACK: "Deploy a wooden fish curing rack on the sand."
 }
 
 var current_tool: ToolType = ToolType.NONE:
@@ -33,6 +36,7 @@ var worms_count: int = 1:
 
 var caught_fish_registry: Array[Dictionary] = []
 var total_catches: int = 0
+var fish_inventory: Array[Dictionary] = []
 
 const REGISTERED_FISH_PATHS: Array[String] = [
 	"res://data/fish/clownfish.tres",
@@ -46,6 +50,59 @@ func _ready() -> void:
 	# Start with Fishing Rod and 1 bait ready as requested
 	current_tool = ToolType.FISHING_ROD
 	worms_count = 1
+
+	# Provide 1 starter caught fish in inventory for immediate Phase 3 rack testing
+	if ResourceLoader.exists("res://data/fish/clownfish.tres"):
+		var starter_fish: FishData = load("res://data/fish/clownfish.tres") as FishData
+		if starter_fish:
+			add_fish_to_inventory(starter_fish, 0.35)
+
+
+func add_fish_to_inventory(fish: FishData, weight: float) -> Dictionary:
+	if not fish:
+		return {}
+	var entry: Dictionary = {
+		"fish_id": fish.id,
+		"display_name": fish.display_name,
+		"weight": weight,
+		"texture_path": fish.texture.resource_path if fish.texture else "",
+		"value": fish.calculate_value(weight),
+		"timestamp": Time.get_unix_time_from_system()
+	}
+	fish_inventory.append(entry)
+	GameEvents.fish_inventory_changed.emit(fish_inventory)
+	return entry
+
+
+func add_fish_dict_to_inventory(entry: Dictionary) -> void:
+	if entry.is_empty():
+		return
+	fish_inventory.append(entry)
+	GameEvents.fish_inventory_changed.emit(fish_inventory)
+
+
+func pop_first_fish() -> Dictionary:
+	if fish_inventory.is_empty():
+		return {}
+	var item: Dictionary = fish_inventory.pop_front()
+	GameEvents.fish_inventory_changed.emit(fish_inventory)
+	return item
+
+
+func remove_fish_by_index(index: int) -> Dictionary:
+	if index < 0 or index >= fish_inventory.size():
+		return {}
+	var item: Dictionary = fish_inventory.pop_at(index)
+	GameEvents.fish_inventory_changed.emit(fish_inventory)
+	return item
+
+
+func has_fish_in_inventory() -> bool:
+	return not fish_inventory.is_empty()
+
+
+func get_inventory_count() -> int:
+	return fish_inventory.size()
 
 
 func has_bait() -> bool:

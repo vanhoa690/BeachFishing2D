@@ -84,17 +84,22 @@ The project follows a **Decoupled Event-Driven & Component-Centric Architecture*
 ---
 
 ### Phase 3: Shoreline Fish Drying/Display Rack and Seagull Theft AI
-- [ ] **Fish Drying / Display Rack (`DryingRack.tscn`)**
-  - [ ] Interactive shoreline wooden racks with multiple hanging slots.
-  - [ ] Real-time curing/drying process (Fresh Fish -> Sun-Dried Fish).
-  - [ ] Visual transitions per slot showing drying progress.
-- [ ] **Seagull Theft & Coastal Bird AI (`Seagull.tscn`)**
-  - [ ] State machine: Circling -> Stalking -> Divebomb -> Snatch -> Escape.
-  - [ ] Target prioritization: Unattended fish on drying racks or player's open bucket.
-  - [ ] Player deterrence mechanic: Chasing or waving shovel scares seagulls away.
-- [ ] **Shoreline Audio-Visual Atmosphere**
-  - [ ] Ambient soundscape (rolling surf, coastal winds, distant bird calls).
-  - [ ] Feathers and sand drift particle effects.
+- [x] **Fish Storage & Inventory System**
+  - [x] Global player fish inventory (`fish_inventory` array with `fish_id`, `display_name`, `weight`, `texture_path`, `value`).
+  - [x] `CatchPopup.tscn` updated to pocket catches into the active player fish inventory.
+  - [x] `FishBasket.tscn` inventory overlay toggleable via [B] or [Tab] with scrollable list and live counters.
+- [x] **Fish Drying / Display Rack (`FishDryingRack.tscn`)**
+  - [x] Placeable wooden shoreline drying rack using `fish-drying-rack.png` with static collision and interaction area.
+  - [x] Player placement tool (Hotbar [4] "Drying Rack Kit") with sand validation and ghost placement preview.
+  - [x] Deposit / Retrieve mechanics: Press [E] / [Space] to hang or collect fish.
+  - [x] Renders fish horizontally on rack; exposes `has_fish: bool` and `current_fish: Dictionary`.
+- [x] **Seagull Theft & Coastal Bird AI (`Seagull.tscn`)**
+  - [x] 6-frame flight/glide/dive `SpriteFrames` (`seagull_frames.tres`, 9 FPS).
+  - [x] 2.5D flight simulation with ground projection shadow scaling with altitude.
+  - [x] State machine: `PATROL` (high sine-wave cruising) -> `DETECT` (scans for exposed racks with fish) -> `DIVE_STEAL` (alert "!" + swoop) -> `ESCAPE` (snatches fish in beak and flies away).
+  - [x] Player defense / `FLEE` reaction: If player approaches (< 90px), seagull squawks, bursts feathers, aborts dive, and flees into the high sky.
+- [x] **Cottage Safe Storage Boundary (`SafeStorageCrate.tscn`)**
+  - [x] Seagull-proof storage crate stub where fish are completely immune to seagull theft.
 
 ---
 

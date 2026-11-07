@@ -37,6 +37,7 @@ var current_minigame: ReelMinigame = null
 var cast_charge_timer: float = 0.0
 var cast_charge_ratio: float = 0.0
 var target_cast_pos: Vector2 = Vector2.ZERO
+var rack_ghost: Sprite2D = null
 
 
 func _ready() -> void:
@@ -45,6 +46,7 @@ func _ready() -> void:
 		animated_sprite.scale = sprite_scale
 		animated_sprite.play(&"idle_left")
 	_update_rod_visual()
+	_init_rack_ghost()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -60,7 +62,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		_cancel_active_fishing()
 		GameState.set_tool(GameState.ToolType.SHOVEL)
 	elif event.is_action_pressed("tool_slot_3") or (event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_3):
+		_cancel_active_fishing()
 		GameState.set_tool(GameState.ToolType.FISHING_ROD)
+	elif event.is_action_pressed("tool_slot_4") or (event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_4):
+		_cancel_active_fishing()
+		GameState.set_tool(GameState.ToolType.DRYING_RACK)
 	
 	# Tool Cycling (Q / Tab / Mouse Wheel)
 	elif event.is_action_pressed("tool_cycle_prev"):
@@ -135,7 +141,13 @@ func _handle_action_inputs(event: InputEvent) -> void:
 			FishingState.REELING:
 				pass
 
-	# 2. General Non-Fishing Inputs (Hands, Shovel)
+	# 2. Drying Rack Placement
+	elif GameState.current_tool == GameState.ToolType.DRYING_RACK:
+		if is_action_press:
+			_attempt_place_drying_rack()
+			get_viewport().set_input_as_handled()
+
+	# 3. General Non-Fishing Inputs (Hands, Shovel)
 	else:
 		if is_action_press:
 			_handle_general_interaction()
@@ -426,6 +438,29 @@ func _check_interaction_target() -> void:
 				GameEvents.interaction_prompt_requested.emit("No Bait! Dig mud with Shovel [2]", hint_pos, true)
 			return
 
+	# If holding Drying Rack Kit
+	if GameState.current_tool == GameState.ToolType.DRYING_RACK:
+		var place_pos := global_position + facing_direction * 36.0
+		var current_world := get_tree().current_scene
+		var is_valid_sand: bool = true
+		if current_world:
+			if current_world.has_method("is_pos_water") and current_world.is_pos_water(place_pos):
+				is_valid_sand = false
+			elif current_world.has_method("is_pos_diggable") and current_world.is_pos_diggable(place_pos):
+				is_valid_sand = false
+		if place_pos.x < 530.0:
+			is_valid_sand = false
+
+		if is_valid_sand:
+			GameEvents.interaction_prompt_requested.emit("Press [Space] / [Left Click] to Place Rack", place_pos, true)
+		else:
+			GameEvents.interaction_prompt_requested.emit("Cannot place here (Needs open dry sand)", place_pos, true)
+
+		_update_rack_ghost(true, place_pos, is_valid_sand)
+		return
+	else:
+		_update_rack_ghost(false, Vector2.ZERO, false)
+
 	if not interaction_ray:
 		return
 
@@ -518,5 +553,62 @@ func perform_dig(dig_pos: Vector2) -> void:
 	)
 
 
-func _on_tool_changed(_new_tool: int) -> void:
+func _on_tool_changed(new_tool: int) -> void:
 	_update_rod_visual()
+	if new_tool != GameState.ToolType.DRYING_RACK:
+		_update_rack_ghost(false, Vector2.ZERO, false)
+
+
+func _init_rack_ghost() -> void:
+	rack_ghost = Sprite2D.new()
+	var tex = load("res://sprites/props/fish-drying-rack.png")
+	if tex:
+		rack_ghost.texture = tex
+	rack_ghost.scale = Vector2(0.038, 0.038)
+	rack_ghost.visible = false
+	rack_ghost.top_level = true
+	add_child(rack_ghost)
+
+
+func _update_rack_ghost(show: bool, target_pos: Vector2, is_valid: bool) -> void:
+	if not is_instance_valid(rack_ghost):
+		return
+	rack_ghost.visible = show
+	if show:
+		rack_ghost.global_position = target_pos + Vector2(0, -18.0)
+		if is_valid:
+			rack_ghost.modulate = Color(0.4, 1.0, 0.5, 0.65)
+		else:
+			rack_ghost.modulate = Color(1.0, 0.35, 0.35, 0.6)
+
+
+func _attempt_place_drying_rack() -> void:
+	if targeted_interactable and is_instance_valid(targeted_interactable):
+		if targeted_interactable.has_method("interact"):
+			targeted_interactable.interact(self)
+			return
+
+	var place_pos := global_position + facing_direction * 36.0
+	var current_world := get_tree().current_scene
+	if not current_world:
+		return
+
+	if (current_world.has_method("is_pos_water") and current_world.is_pos_water(place_pos)) or place_pos.x < 530.0:
+		GameEvents.emit_notification("Cannot place rack in the water! Choose dry beach sand.")
+		return
+
+	if current_world.has_method("is_pos_diggable") and current_world.is_pos_diggable(place_pos):
+		GameEvents.emit_notification("Cannot place rack over a worm mud patch! Choose clean sand.")
+		return
+
+	var rack_scene: PackedScene = load("res://scenes/mechanics/fish_drying_rack.tscn")
+	if rack_scene:
+		var rack_inst: FishDryingRack = rack_scene.instantiate() as FishDryingRack
+		rack_inst.global_position = place_pos
+		get_parent().add_child(rack_inst)
+		GameEvents.emit_notification("Constructed a Fish Drying Rack on the shore!")
+
+		if dig_particles:
+			dig_particles.position = facing_direction * 22.0
+			dig_particles.restart()
+			dig_particles.emitting = true

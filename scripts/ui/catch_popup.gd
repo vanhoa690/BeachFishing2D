@@ -101,6 +101,11 @@ func _on_pocket_pressed() -> void:
 		return
 	is_closing = true
 
+	# Store caught fish in player inventory
+	if current_fish:
+		GameState.add_fish_to_inventory(current_fish, current_weight)
+		GameEvents.emit_notification("Stored %s in Fish Basket!" % current_fish.display_name)
+
 	if is_instance_valid(auto_close_timer):
 		auto_close_timer.stop()
 

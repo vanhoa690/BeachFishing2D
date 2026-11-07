@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/seagull.gd" id="1_seagull"]
+[ext_resource type="SpriteFrames" path="res://sprites/seagull/seagull_frames.tres" id="2_frames"]
+[ext_resource type="Script" path="res://scripts/mechanics/alert_bubble.gd" id="3_alert"]
+
+[node name="Seagull" type="Node2D" groups=["seagull"]]
+z_index = 8
+script = ExtResource("1_seagull")
+
+[node name="GroundShadow" type="Polygon2D" parent="."]
+color = Color(0.08, 0.12, 0.18, 0.3)
+polygon = PackedVector2Array(-14, 0, -10, -5, 0, -7, 10, -5, 14, 0, 10, 5, 0, 7, -10, 5)
+
+[node name="FlyerNode" type="Node2D" parent="."]
+position = Vector2(0, -110)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="FlyerNode"]
+scale = Vector2(0.065, 0.065)
+sprite_frames = ExtResource("2_frames")
+animation = &"fly"
+
+[node name="AlertMark" type="Node2D" parent="FlyerNode"]
+position = Vector2(0, -26)
+script = ExtResource("3_alert")
+
+[node name="BeakFish" type="Sprite2D" parent="FlyerNode"]
+visible = false
+position = Vector2(8, 6)
+rotation = 0.4
+scale = Vector2(0.035, 0.035)
+
+[node name="SquawkParticles" type="CPUParticles2D" parent="FlyerNode"]
+emitting = false
+amount = 8
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.9
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector2(0, -1)
+spread = 70.0
+gravity = Vector2(0, 80)
+initial_velocity_min = 25.0
+initial_velocity_max = 55.0
+scale_amount_min = 1.2
+scale_amount_max = 2.5
+color = Color(1, 1, 1, 0.85)
+

@@ -41,6 +41,12 @@ signal fishing_reeling_started()
 @warning_ignore("unused_signal")
 signal fishing_ended(success: bool)
 
+@warning_ignore("unused_signal")
+signal fish_inventory_changed(current_inventory: Array)
+
+@warning_ignore("unused_signal")
+signal drying_rack_interacted(rack_node: Node)
+
 
 func _enter_tree() -> void:
 	_ensure_input_mappings()
@@ -68,6 +74,7 @@ func _ensure_input_mappings() -> void:
 	_register_action_keys("tool_slot_1", [KEY_1])
 	_register_action_keys("tool_slot_2", [KEY_2])
 	_register_action_keys("tool_slot_3", [KEY_3])
+	_register_action_keys("tool_slot_4", [KEY_4])
 
 
 func _register_action_keys(action_name: StringName, keys: Array[Key]) -> void:

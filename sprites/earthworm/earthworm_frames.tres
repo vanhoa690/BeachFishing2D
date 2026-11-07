@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=6 format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dxfrutqy4g5rq"]
 
 [ext_resource type="Texture2D" uid="uid://dpfexmrfe3v7o" path="res://sprites/earthworm/earthworm-bait-frame-1.png" id="1_frame1"]
 [ext_resource type="Texture2D" uid="uid://cfirmm68ej7l0" path="res://sprites/earthworm/earthworm-bait-frame-2.png" id="2_frame2"]
@@ -20,8 +20,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_frame4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"wriggle",
 "speed": 8.0
 }]
-

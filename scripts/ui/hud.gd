@@ -5,10 +5,14 @@ extends CanvasLayer
 @onready var slot_hands: PanelContainer = %SlotHands
 @onready var slot_shovel: PanelContainer = %SlotShovel
 @onready var slot_rod: PanelContainer = %SlotRod
+@onready var slot_rack: PanelContainer = %SlotRack
 @onready var tool_info_label: Label = %ToolInfoLabel
 
 @onready var worms_label: Label = %WormCount
 @onready var worm_panel: PanelContainer = %WormPanel
+@onready var fish_label: Label = %FishCount
+@onready var fish_panel: PanelContainer = %FishPanel
+@onready var fish_basket: FishBasket = %FishBasket
 
 @onready var btn_fullscreen: Button = %BtnFullscreen
 @onready var btn_quit: Button = %BtnQuit
@@ -32,6 +36,8 @@ func _ready() -> void:
 		slot_shovel = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotShovel")
 	if not slot_rod:
 		slot_rod = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotRod")
+	if not slot_rack:
+		slot_rack = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotRack")
 	if not btn_fullscreen:
 		btn_fullscreen = get_node_or_null("Root/TopMargin/TopRightControls/WindowControls/BtnFullscreen")
 	if not btn_quit:
@@ -44,6 +50,8 @@ func _ready() -> void:
 		slots.append(slot_shovel)
 	if slot_rod:
 		slots.append(slot_rod)
+	if slot_rack:
+		slots.append(slot_rack)
 	
 	# Connect button signals
 	if is_instance_valid(btn_fullscreen):
@@ -54,12 +62,22 @@ func _ready() -> void:
 	# Connect to event bus
 	GameEvents.tool_changed.connect(_on_tool_changed)
 	GameEvents.worms_count_changed.connect(_on_worms_count_changed)
+	GameEvents.fish_inventory_changed.connect(_on_fish_inventory_changed)
 	GameEvents.interaction_prompt_requested.connect(_on_interaction_prompt_requested)
 	GameEvents.notification_banner.connect(show_notification)
 
 	# Initial state setup
 	_on_tool_changed(GameState.current_tool)
 	_on_worms_count_changed(GameState.worms_count)
+	_on_fish_inventory_changed(GameState.fish_inventory)
+
+	# Click fish panel to open basket
+	if is_instance_valid(fish_panel):
+		fish_panel.gui_input.connect(func(event: InputEvent):
+			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				if is_instance_valid(fish_basket):
+					fish_basket.toggle()
+		)
 	
 	if is_instance_valid(prompt_panel):
 		prompt_panel.modulate.a = 0.0
@@ -147,6 +165,16 @@ func _on_worms_count_changed(new_count: int) -> void:
 		var tween := create_tween()
 		tween.tween_property(worm_panel, "scale", Vector2(1.18, 1.18), 0.1).set_trans(Tween.TRANS_BACK)
 		tween.tween_property(worm_panel, "scale", Vector2(1.0, 1.0), 0.15)
+
+
+func _on_fish_inventory_changed(inventory: Array) -> void:
+	if is_instance_valid(fish_label):
+		fish_label.text = "x %d" % inventory.size()
+	
+	if is_instance_valid(fish_panel) and is_inside_tree():
+		var tween := create_tween()
+		tween.tween_property(fish_panel, "scale", Vector2(1.15, 1.15), 0.1).set_trans(Tween.TRANS_BACK)
+		tween.tween_property(fish_panel, "scale", Vector2.ONE, 0.15)
 
 
 func _on_interaction_prompt_requested(prompt_text: String, _world_pos: Vector2, should_show: bool) -> void:

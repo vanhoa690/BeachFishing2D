@@ -26,6 +26,21 @@ signal notification_banner(message: String)
 @warning_ignore("unused_signal")
 signal fish_caught(fish_data: FishData, weight: float)
 
+@warning_ignore("unused_signal")
+signal fishing_cast_started(target_position: Vector2)
+
+@warning_ignore("unused_signal")
+signal fishing_bobber_landed(landing_position: Vector2)
+
+@warning_ignore("unused_signal")
+signal fishing_bite_alert(bobber_position: Vector2)
+
+@warning_ignore("unused_signal")
+signal fishing_reeling_started()
+
+@warning_ignore("unused_signal")
+signal fishing_ended(success: bool)
+
 
 func _enter_tree() -> void:
 	_ensure_input_mappings()
@@ -37,6 +52,17 @@ func _ensure_input_mappings() -> void:
 	_register_action_keys("move_up", [KEY_W, KEY_UP])
 	_register_action_keys("move_down", [KEY_S, KEY_DOWN])
 	_register_action_keys("interact", [KEY_SPACE, KEY_E])
+	
+	# Add Left Mouse Click to interact action
+	var has_mouse_left: bool = false
+	for event in InputMap.action_get_events("interact"):
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			has_mouse_left = true
+			break
+	if not has_mouse_left:
+		var mouse_event := InputEventMouseButton.new()
+		mouse_event.button_index = MOUSE_BUTTON_LEFT
+		InputMap.action_add_event("interact", mouse_event)
 	_register_action_keys("tool_cycle_prev", [KEY_Q])
 	_register_action_keys("tool_cycle_next", [KEY_TAB])
 	_register_action_keys("tool_slot_1", [KEY_1])

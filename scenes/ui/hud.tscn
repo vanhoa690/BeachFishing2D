@@ -222,22 +222,25 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = -125.0
-offset_right = 250.0
+offset_left = -300.0
+offset_top = -140.0
+offset_right = 300.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_bottom = 18
 
 [node name="HotbarContainer" type="VBoxContainer" parent="Root/HotbarMargin"]
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 16
 
 [node name="ToolInfoLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.94, 0.88, 0.76, 0.95)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
 theme_override_font_sizes/font_size = 13
 text = "Sand Shovel — Dig for juicy sand worms"
 horizontal_alignment = 1

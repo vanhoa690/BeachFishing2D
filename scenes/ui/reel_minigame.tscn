@@ -1,0 +1,205 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/reel_minigame.gd" id="1_minigame"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.1, 0.12, 0.15, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.76, 0.42, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_track"]
+bg_color = Color(0.06, 0.08, 0.1, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.35, 0.45, 0.6)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_target_zone"]
+bg_color = Color(0.18, 0.75, 0.38, 0.65)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 1, 0.65, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hook_indicator"]
+bg_color = Color(1, 0.82, 0.28, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.18, 0.08, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_fill"]
+bg_color = Color(0.25, 0.85, 0.55, 0.95)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="ReelMinigame" type="CanvasLayer"]
+layer = 12
+script = ExtResource("1_minigame")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 180.0
+offset_top = -145.0
+offset_right = 320.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(70, 145)
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Root/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Root/PanelContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+theme_override_font_sizes/font_size = 14
+text = "REEL IN!"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Root/PanelContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+text = "KEEP IN ZONE!"
+horizontal_alignment = 1
+
+[node name="GameArea" type="HBoxContainer" parent="Root/PanelContainer/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Track" type="Control" parent="Root/PanelContainer/VBox/GameArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 190)
+layout_mode = 2
+
+[node name="TrackBg" type="Panel" parent="Root/PanelContainer/VBox/GameArea/Track"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_track")
+
+[node name="TargetZone" type="Panel" parent="Root/PanelContainer/VBox/GameArea/Track"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(44, 52)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 60.0
+offset_right = 46.0
+offset_bottom = 112.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_target_zone")
+
+[node name="FishGlyph" type="Label" parent="Root/PanelContainer/VBox/GameArea/Track/TargetZone"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 15
+text = "🐟"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HookIndicator" type="Panel" parent="Root/PanelContainer/VBox/GameArea/Track"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(44, 22)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 120.0
+offset_right = 46.0
+offset_bottom = 142.0
+pivot_offset = Vector2(22, 11)
+theme_override_styles/panel = SubResource("StyleBoxFlat_hook_indicator")
+
+[node name="HookGlyph" type="Label" parent="Root/PanelContainer/VBox/GameArea/Track/HookIndicator"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.2, 0.15, 0.05, 1)
+theme_override_font_sizes/font_size = 12
+text = "⚓"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TensionProgress" type="ProgressBar" parent="Root/PanelContainer/VBox/GameArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(14, 190)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
+fill_mode = 3
+show_percentage = false
+
+[node name="TimerBox" type="HBoxContainer" parent="Root/PanelContainer/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="TimerLabel" type="Label" parent="Root/PanelContainer/VBox/TimerBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "3.0s"
+horizontal_alignment = 1
+
+[node name="HintLabel" type="Label" parent="Root/PanelContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "Tap [Space] / [L-Click]"
+horizontal_alignment = 1
+

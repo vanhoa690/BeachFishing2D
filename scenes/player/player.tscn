@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
 [ext_resource type="SpriteFrames" path="res://sprites/player/fisherman_frames.tres" id="2_frames"]
+[ext_resource type="Script" path="res://scripts/player/rod_visual.gd" id="3_rod"]
+[ext_resource type="Script" path="res://scripts/player/cast_indicator.gd" id="4_cast"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 7.0
@@ -23,6 +25,14 @@ position = Vector2(0, -12)
 scale = Vector2(0.08, 0.08)
 sprite_frames = ExtResource("2_frames")
 animation = &"idle_down"
+
+[node name="RodVisual" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("3_rod")
+
+[node name="CastIndicator" type="Node2D" parent="."]
+z_index = 20
+script = ExtResource("4_cast")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7)

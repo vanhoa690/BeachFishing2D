@@ -8,3 +8,4 @@ res://scripts/core/game_state.gd
 res://scripts/world/beach_main.gd
 res://scripts/resources/fish_data.gd
 res://scripts/ui/catch_popup.gd
+res://scripts/player/player.gd

@@ -67,17 +67,18 @@ The project follows a **Decoupled Event-Driven & Component-Centric Architecture*
   - [ ] 2D procedural water shader with foam edge, wave distortion, and depth gradient.
   - [ ] Shoreline wet sand effect and tide bobbing dynamics.
   - [ ] Ambient coastal sound triggers.
-- [ ] **Cast & Bobber Mechanics**
-  - [ ] Cast trajectory with distance charge meter based on rod quality and timing.
-  - [ ] Bobber floating physics on water surface with ripple particles.
-  - [ ] Nibble tension system (subtle tugs requiring player patience).
-- [ ] **Reeling Minigame**
-  - [ ] Cozy tension bar minigame (keeping fish icon within target reel zone).
-  - [ ] Line tension warning and snap failure state.
-  - [ ] Bait consumption upon bite.
-- [ ] **Fish Catch Registry & Species Data**
+- [x] **Cast & Bobber Mechanics**
+  - [x] Cast trajectory with distance charge meter (60px to 180px) and power gauge.
+  - [x] Bobber floating physics on water surface with ripple particles and parabolic launch.
+  - [x] Nibble tension system (subtle pre-bite twitches, 2-5s delay, and 1.2s "!" bite reaction window).
+- [x] **Reeling Minigame**
+  - [x] Cozy tension bar minigame (tappable/holdable hook physics inside moving target zone for 3 seconds).
+  - [x] Line tension warning, failure escape states, and animated feedback.
+  - [x] Bait consumption upon catch or loss (`worms_count -= 1`).
+- [x] **Fish Catch Registry & Species Data**
   - [x] Resource-based `FishData` architecture (species, weight, rarity, sell value, preferred bait).
-  - [x] Catch celebration modal showcasing caught fish sprite, size, and lore blurb.
+  - [x] Weighted random catch distribution according to species `rarity_weight`.
+  - [x] Catch celebration modal (`CatchPopup.tscn`) showcasing caught fish sprite, size, and lore blurb.
   - [ ] Catch logbook / journal indexing discovered coastal species.
 
 ---

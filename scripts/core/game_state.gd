@@ -26,7 +26,7 @@ var current_tool: ToolType = ToolType.NONE:
 			current_tool = value
 			GameEvents.tool_changed.emit(current_tool)
 
-var worms_count: int = 0:
+var worms_count: int = 1:
 	set(value):
 		worms_count = maxi(0, value)
 		GameEvents.worms_count_changed.emit(worms_count)
@@ -34,10 +34,50 @@ var worms_count: int = 0:
 var caught_fish_registry: Array[Dictionary] = []
 var total_catches: int = 0
 
+const REGISTERED_FISH_PATHS: Array[String] = [
+	"res://data/fish/clownfish.tres",
+	"res://data/fish/blue_tang.tres",
+	"res://data/fish/sea_bass.tres",
+	"res://data/fish/red_snapper.tres"
+]
+
 
 func _ready() -> void:
-	# Default starting tool: Shovel (ready for digging worms in Phase 1)
-	current_tool = ToolType.SHOVEL
+	# Start with Fishing Rod and 1 bait ready as requested
+	current_tool = ToolType.FISHING_ROD
+	worms_count = 1
+
+
+func has_bait() -> bool:
+	return worms_count > 0
+
+
+func consume_bait() -> bool:
+	return remove_worms(1)
+
+
+func roll_random_fish() -> FishData:
+	var pool: Array[FishData] = []
+	var total_weight: float = 0.0
+
+	for path in REGISTERED_FISH_PATHS:
+		if ResourceLoader.exists(path):
+			var fish: FishData = load(path) as FishData
+			if fish:
+				pool.append(fish)
+				total_weight += fish.rarity_weight
+
+	if pool.is_empty():
+		return null
+
+	var roll: float = randf_range(0.0, total_weight)
+	var accum: float = 0.0
+	for fish in pool:
+		accum += fish.rarity_weight
+		if roll <= accum:
+			return fish
+
+	return pool[0]
 
 
 func set_tool(new_tool: ToolType) -> void:

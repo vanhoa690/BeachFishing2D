@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" uid="uid://dpfexmrfe3v7o" path="res://sprites/earthworm/earthworm-bait-frame-1.png" id="2_worm_icon"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.14, 0.13, 0.12, 0.88)
@@ -62,6 +63,54 @@ content_margin_top = 8.0
 content_margin_right = 18.0
 content_margin_bottom = 8.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.16, 0.15, 0.14, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.4, 0.35, 0.7)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.26, 0.24, 0.2, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.82, 0.28, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.12, 0.11, 0.1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.7, 0.22, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_quit_hover"]
+bg_color = Color(0.4, 0.15, 0.15, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.95, 0.38, 0.38, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="HUD" type="CanvasLayer"]
 layer = 10
 script = ExtResource("1_hud")
@@ -91,19 +140,22 @@ size_flags_horizontal = 0
 
 [node name="WormPanel" type="PanelContainer" parent="Root/TopMargin/StatsBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(140, 42)
+custom_minimum_size = Vector2(144, 42)
 layout_mode = 2
-pivot_offset = Vector2(70, 21)
+pivot_offset = Vector2(72, 21)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="HBox" type="HBoxContainer" parent="Root/TopMargin/StatsBox/WormPanel"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Icon" type="Label" parent="Root/TopMargin/StatsBox/WormPanel/HBox"]
+[node name="BaitIcon" type="TextureRect" parent="Root/TopMargin/StatsBox/WormPanel/HBox"]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "🪱"
+size_flags_vertical = 4
+texture = ExtResource("2_worm_icon")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Title" type="Label" parent="Root/TopMargin/StatsBox/WormPanel/HBox"]
 layout_mode = 2
@@ -118,16 +170,50 @@ theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
 theme_override_font_sizes/font_size = 16
 text = "x 0"
 
-[node name="HelperPanel" type="PanelContainer" parent="Root/TopMargin"]
+[node name="TopRightControls" type="HBoxContainer" parent="Root/TopMargin"]
 layout_mode = 2
 size_flags_horizontal = 8
+theme_override_constants/separation = 12
+
+[node name="HelperPanel" type="PanelContainer" parent="Root/TopMargin/TopRightControls"]
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="HelperLabel" type="Label" parent="Root/TopMargin/HelperPanel"]
+[node name="HelperLabel" type="Label" parent="Root/TopMargin/TopRightControls/HelperPanel"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 0.85)
 theme_override_font_sizes/font_size = 12
-text = "WASD: Move | Space/E: Dig & Interact | 1, 2, 3: Tools | Q: Cycle"
+text = "WASD: Move | Space/E: Dig | 1-3: Tools | Q: Cycle"
+
+[node name="WindowControls" type="HBoxContainer" parent="Root/TopMargin/TopRightControls"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BtnFullscreen" type="Button" parent="Root/TopMargin/TopRightControls/WindowControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+tooltip_text = "Toggle Fullscreen (F11)"
+focus_mode = 0
+theme_override_colors/font_color = Color(0.92, 0.88, 0.8, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+text = "⛶"
+
+[node name="BtnQuit" type="Button" parent="Root/TopMargin/TopRightControls/WindowControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+tooltip_text = "Quit Game (Esc)"
+focus_mode = 0
+theme_override_colors/font_color = Color(0.95, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_quit_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+text = "✕"
 
 [node name="HotbarMargin" type="MarginContainer" parent="Root"]
 layout_mode = 1

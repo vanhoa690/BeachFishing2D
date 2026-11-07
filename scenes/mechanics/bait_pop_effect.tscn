@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/mechanics/bait_pop_effect.gd" id="1_pop"]
+[ext_resource type="SpriteFrames" path="res://sprites/earthworm/earthworm_frames.tres" id="2_worm_frames"]
+
+[node name="BaitPopEffect" type="Node2D"]
+z_index = 25
+script = ExtResource("1_pop")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+color = Color(0.12, 0.16, 0.22, 0.35)
+polygon = PackedVector2Array(-8, -2, -5, -4, 0, -4.5, 5, -4, 8, -2, 8, 2, 5, 4, 0, 4.5, -5, 4, -8, 2)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.065, 0.065)
+sprite_frames = ExtResource("2_worm_frames")
+animation = &"wriggle"
+autoplay = "wriggle"
+

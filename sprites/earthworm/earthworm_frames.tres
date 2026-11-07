@@ -1,0 +1,27 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3]
+
+[ext_resource type="Texture2D" uid="uid://dpfexmrfe3v7o" path="res://sprites/earthworm/earthworm-bait-frame-1.png" id="1_frame1"]
+[ext_resource type="Texture2D" uid="uid://cfirmm68ej7l0" path="res://sprites/earthworm/earthworm-bait-frame-2.png" id="2_frame2"]
+[ext_resource type="Texture2D" uid="uid://k5k81f4wtf4f" path="res://sprites/earthworm/earthworm-bait-frame-3.png" id="3_frame3"]
+[ext_resource type="Texture2D" uid="uid://dc2kjnrs4rai2" path="res://sprites/earthworm/earthworm-bait-frame-4.png" id="4_frame4"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_frame1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_frame2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_frame4")
+}],
+"loop": true,
+"name": &"wriggle",
+"speed": 8.0
+}]
+

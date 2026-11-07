@@ -1,6 +1,6 @@
 extends CanvasLayer
 ## In-Game HUD for "Tide & Hook"
-## Displays tool hotbar with active highlights, bait counter, and interaction prompts.
+## Displays tool hotbar with active highlights, bait counter, interaction prompts, and window controls.
 
 @onready var slot_hands: PanelContainer = %SlotHands
 @onready var slot_shovel: PanelContainer = %SlotShovel
@@ -9,6 +9,9 @@ extends CanvasLayer
 
 @onready var worms_label: Label = %WormCount
 @onready var worm_panel: PanelContainer = %WormPanel
+
+@onready var btn_fullscreen: Button = %BtnFullscreen
+@onready var btn_quit: Button = %BtnQuit
 
 @onready var prompt_panel: PanelContainer = %PromptPanel
 @onready var prompt_label: Label = %PromptLabel
@@ -29,6 +32,10 @@ func _ready() -> void:
 		slot_shovel = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotShovel")
 	if not slot_rod:
 		slot_rod = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotRod")
+	if not btn_fullscreen:
+		btn_fullscreen = get_node_or_null("Root/TopMargin/TopRightControls/WindowControls/BtnFullscreen")
+	if not btn_quit:
+		btn_quit = get_node_or_null("Root/TopMargin/TopRightControls/WindowControls/BtnQuit")
 
 	slots.clear()
 	if slot_hands:
@@ -38,6 +45,12 @@ func _ready() -> void:
 	if slot_rod:
 		slots.append(slot_rod)
 	
+	# Connect button signals
+	if is_instance_valid(btn_fullscreen):
+		btn_fullscreen.pressed.connect(toggle_fullscreen)
+	if is_instance_valid(btn_quit):
+		btn_quit.pressed.connect(quit_game)
+
 	# Connect to event bus
 	GameEvents.tool_changed.connect(_on_tool_changed)
 	GameEvents.worms_count_changed.connect(_on_worms_count_changed)
@@ -52,6 +65,26 @@ func _ready() -> void:
 		prompt_panel.modulate.a = 0.0
 	if is_instance_valid(notification_banner):
 		notification_banner.modulate.a = 0.0
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_F11:
+			toggle_fullscreen()
+		elif event.keycode == KEY_ESCAPE:
+			quit_game()
+
+
+func toggle_fullscreen() -> void:
+	var current_mode := DisplayServer.window_get_mode()
+	if current_mode == DisplayServer.WINDOW_MODE_FULLSCREEN or current_mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+
+func quit_game() -> void:
+	get_tree().quit()
 
 
 func _on_tool_changed(tool_index: int) -> void:

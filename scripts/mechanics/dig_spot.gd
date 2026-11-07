@@ -3,6 +3,8 @@ extends Area2D
 ## Interactive Sandy Worm Mound for "Tide & Hook"
 ## Coastal digging spot yielding sand worms when excavated with a shovel.
 
+const BAIT_POP_SCENE: PackedScene = preload("res://scenes/mechanics/bait_pop_effect.tscn")
+
 enum SpotState {
 	ACTIVE,
 	EXHAUSTED
@@ -76,10 +78,16 @@ func interact(player: Node2D) -> void:
 		sand_particles.restart()
 		sand_particles.emitting = true
 
-	# Calculate worm drop
+	# Calculate worm drop & trigger pop effect
 	var yield_amount: int = randi_range(min_worms_yield, max_worms_yield)
-	GameState.add_worms(yield_amount)
-	GameEvents.worm_dug.emit(yield_amount, global_position)
+	if BAIT_POP_SCENE:
+		var pop_inst := BAIT_POP_SCENE.instantiate() as BaitPopEffect
+		pop_inst.global_position = global_position
+		get_parent().add_child(pop_inst)
+		pop_inst.launch(yield_amount, player)
+	else:
+		GameState.add_worms(yield_amount)
+		GameEvents.worm_dug.emit(yield_amount, global_position)
 
 	# Begin respawn cooldown
 	respawn_timer.start(respawn_time)

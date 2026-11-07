@@ -1,0 +1,296 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.14, 0.13, 0.12, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.4, 0.35, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.14, 0.13, 0.12, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.4, 0.35, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prompt"]
+bg_color = Color(0.1, 0.1, 0.12, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.75, 0.35, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner"]
+bg_color = Color(0.15, 0.12, 0.1, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.45, 0.25, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 18.0
+content_margin_bottom = 8.0
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_hud")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopMargin" type="MarginContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+
+[node name="StatsBox" type="HBoxContainer" parent="Root/TopMargin"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="WormPanel" type="PanelContainer" parent="Root/TopMargin/StatsBox"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+pivot_offset = Vector2(70, 21)
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="Root/TopMargin/StatsBox/WormPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon" type="Label" parent="Root/TopMargin/StatsBox/WormPanel/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🪱"
+
+[node name="Title" type="Label" parent="Root/TopMargin/StatsBox/WormPanel/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.85, 0.72, 1)
+theme_override_font_sizes/font_size = 14
+text = "Bait:"
+
+[node name="WormCount" type="Label" parent="Root/TopMargin/StatsBox/WormPanel/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+theme_override_font_sizes/font_size = 16
+text = "x 0"
+
+[node name="HelperPanel" type="PanelContainer" parent="Root/TopMargin"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HelperLabel" type="Label" parent="Root/TopMargin/HelperPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 0.85)
+theme_override_font_sizes/font_size = 12
+text = "WASD: Move | Space/E: Dig & Interact | 1, 2, 3: Tools | Q: Cycle"
+
+[node name="HotbarMargin" type="MarginContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -125.0
+offset_right = 250.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 18
+
+[node name="HotbarContainer" type="VBoxContainer" parent="Root/HotbarMargin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ToolInfoLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.88, 0.76, 0.95)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_font_sizes/font_size = 13
+text = "Sand Shovel — Dig for juicy sand worms"
+horizontal_alignment = 1
+
+[node name="Hotbar" type="HBoxContainer" parent="Root/HotbarMargin/HotbarContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+
+[node name="SlotHands" type="PanelContainer" parent="Root/HotbarMargin/HotbarContainer/Hotbar"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+pivot_offset = Vector2(32, 32)
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="VBox" type="VBoxContainer" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotHands"]
+layout_mode = 2
+alignment = 1
+
+[node name="KeyLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotHands/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "[1]"
+horizontal_alignment = 1
+
+[node name="IconLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotHands/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "✋"
+horizontal_alignment = 1
+
+[node name="SlotShovel" type="PanelContainer" parent="Root/HotbarMargin/HotbarContainer/Hotbar"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+pivot_offset = Vector2(32, 32)
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="VBox" type="VBoxContainer" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotShovel"]
+layout_mode = 2
+alignment = 1
+
+[node name="KeyLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotShovel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "[2]"
+horizontal_alignment = 1
+
+[node name="IconLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotShovel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "⛏"
+horizontal_alignment = 1
+
+[node name="SlotRod" type="PanelContainer" parent="Root/HotbarMargin/HotbarContainer/Hotbar"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+pivot_offset = Vector2(32, 32)
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="VBox" type="VBoxContainer" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotRod"]
+layout_mode = 2
+alignment = 1
+
+[node name="KeyLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotRod/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "[3]"
+horizontal_alignment = 1
+
+[node name="IconLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotRod/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🎣"
+horizontal_alignment = 1
+
+[node name="PromptContainer" type="Control" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 80.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PromptPanel" type="PanelContainer" parent="Root/PromptContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -22.0
+offset_right = 150.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_prompt")
+
+[node name="PromptLabel" type="Label" parent="Root/PromptContainer/PromptPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "Press [Space] to Dig for Sand Worms"
+horizontal_alignment = 1
+
+[node name="NotificationContainer" type="Control" parent="Root"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 78.0
+offset_bottom = 78.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="BannerPanel" type="PanelContainer" parent="Root/NotificationContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -20.0
+offset_right = 180.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
+
+[node name="NotificationLabel" type="Label" parent="Root/NotificationContainer/BannerPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.85, 1)
+theme_override_font_sizes/font_size = 13
+text = "Notice"
+horizontal_alignment = 1
+

@@ -1,0 +1,90 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/beach_main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/world/beach_terrain.gd" id="2_terrain"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/dig_spot.tscn" id="4_dig_spot"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(1600, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom"]
+size = Vector2(1600, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left"]
+size = Vector2(30, 1000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
+size = Vector2(30, 1000)
+
+[node name="BeachMain" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Terrain" type="Node2D" parent="."]
+z_index = 0
+script = ExtResource("2_terrain")
+
+[node name="WorldBoundaries" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 2
+
+[node name="TopWall" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(800, 115)
+shape = SubResource("RectangleShape2D_top")
+
+[node name="BottomWall" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(800, 965)
+shape = SubResource("RectangleShape2D_bottom")
+
+[node name="LeftWall" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(15, 500)
+shape = SubResource("RectangleShape2D_left")
+
+[node name="RightWall" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(1585, 500)
+shape = SubResource("RectangleShape2D_right")
+
+[node name="World" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="DigSpots" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="DigSpot1" parent="World/DigSpots" instance=ExtResource("4_dig_spot")]
+position = Vector2(340, 420)
+
+[node name="DigSpot2" parent="World/DigSpots" instance=ExtResource("4_dig_spot")]
+position = Vector2(510, 560)
+
+[node name="DigSpot3" parent="World/DigSpots" instance=ExtResource("4_dig_spot")]
+position = Vector2(760, 470)
+
+[node name="DigSpot4" parent="World/DigSpots" instance=ExtResource("4_dig_spot")]
+position = Vector2(980, 610)
+
+[node name="DigSpot5" parent="World/DigSpots" instance=ExtResource("4_dig_spot")]
+position = Vector2(1200, 520)
+
+[node name="DigSpot6" parent="World/DigSpots" instance=ExtResource("4_dig_spot")]
+position = Vector2(430, 690)
+
+[node name="DigSpot7" parent="World/DigSpots" instance=ExtResource("4_dig_spot")]
+position = Vector2(860, 730)
+
+[node name="DigSpot8" parent="World/DigSpots" instance=ExtResource("4_dig_spot")]
+position = Vector2(1340, 680)
+
+[node name="Player" parent="World" instance=ExtResource("3_player")]
+position = Vector2(640, 450)
+
+[node name="Camera2D" type="Camera2D" parent="World/Player"]
+zoom = Vector2(1.75, 1.75)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="Effects" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="HUD" parent="." instance=ExtResource("5_hud")]
+

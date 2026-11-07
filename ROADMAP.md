@@ -1,0 +1,163 @@
+# Tide & Hook - Project Roadmap & Architecture Specification
+
+> **Game Title**: Tide & Hook  
+> **Genre**: Cozy 2D Top-Down Coastal Fishing & Gathering Simulator  
+> **Engine**: Godot Engine 4.x (Forward+ / Mobile / Compatibility)  
+> **Language**: GDScript 2.0 (Strictly English code, variables, UI, and documentation)
+
+---
+
+## 1. System Architecture & State Conventions
+
+### 1.1 Architecture Overview
+The project follows a **Decoupled Event-Driven & Component-Centric Architecture**:
+- **Autoload Singletons (Global Core)**:
+  - `GameEvents` (`res://scripts/core/game_events.gd`): Central event bus for cross-system communication without direct node coupling.
+  - `GameState` (`res://scripts/core/game_state.gd`): Single source of truth for player persistent stats, inventory (bait, tools, fish catches), time-of-day, and world flags.
+- **Node Hierarchies & Separation of Concerns**:
+  - `Player`: Physics processing, input handling, tool holding states, and interaction raycasting.
+  - `Mechanics`: Modular world interactables (`DigSpot`, `WaterBody`, `DryingRack`) with area detection and lifecycle states.
+  - `UI/HUD`: Reactive canvas layers listening to `GameEvents` and `GameState` signals; never polled in `_process`.
+
+### 1.2 Naming Conventions & Code Standards
+- **Scenes & Files**: `snake_case.tscn`, `snake_case.gd`.
+- **Classes**: `PascalCase` (`class_name PlayerCharacter extends CharacterBody2D`).
+- **Variables & Functions**: `snake_case`, strictly typed (`var current_tool: ToolType = ToolType.NONE`, `func dig_spot() -> void:`).
+- **Constants & Enums**: `ALL_CAPS` or `PascalCase` for enum type, `SCREAMING_SNAKE_CASE` for members.
+- **Signals**: Past-tense or action-triggered (`tool_swapped(new_tool: int)`, `worm_collected(new_total: int)`).
+
+---
+
+## 2. Phase Breakdown & Execution Checklist
+
+### Phase 1: Player Movement, Tool Swapping, and Worm Digging Mechanic
+- [x] **Project Foundation & Input Map**
+  - [x] Configure project settings (1280x720 viewport, canvas_items stretch mode, custom action mappings for WASD/Arrows, Interact/Action, Tool cycle, hotkeys 1-3).
+  - [x] Create core Autoloads: `GameEvents.gd` and `GameState.gd`.
+- [x] **Player Controller (`Player.tscn`)**
+  - [x] Implement top-down 8-directional movement with acceleration, friction, and normalized diagonal speed.
+  - [x] Facing direction tracker (Up, Down, Left, Right) with visual character orientation.
+  - [x] Dynamic character visualization (cozy fisher with raincoat/beanie and tool socket).
+  - [x] Tool state machine: `NONE`, `SHOVEL`, `FISHING_ROD`.
+  - [x] Interaction Raycast/Shapecast aiming in player's facing direction.
+- [x] **Tool Swapping & Equipment System**
+  - [x] Hotbar cycling with Mouse Wheel, Q/E, and number keys (1: None, 2: Shovel, 3: Fishing Rod).
+  - [x] Visual tool attachments rendering the active held item in the player's hands.
+  - [x] Tool swap notifications via `GameEvents`.
+- [x] **Worm Digging Mechanic (`DigSpot.tscn`)**
+  - [x] Interactive sandy mound / sand hole mechanic along coastal zones.
+  - [x] Shovel validation check (only usable when shovel is equipped and player interacts with dig spot).
+  - [x] Digging action: Player dig animation, sand puff particles, and audio-visual feedback.
+  - [x] Loot drop logic: Sand Worms (Lugworms) awarded to `GameState` bait inventory.
+  - [x] Dig spot cooldown, exhausted hole state, and progressive regeneration.
+- [x] **User Interface & HUD (`HUD.tscn`)**
+  - [x] Cozy hotbar displaying tool slots with active selection highlight.
+  - [x] Bait inventory counter (Worm icon + count).
+  - [x] Interactive floating prompt ("Press Space to Dig") when near dig spots.
+  - [x] Floating text notification system ("+1 Sand Worm!").
+- [x] **Beach Sandbox Scene (`BeachMain.tscn`)**
+  - [x] Playable coastal environment with sand terrain, shoreline boundary, decorative beach elements.
+  - [x] Smooth Camera2D with limits and target tracking.
+  - [x] Multiple interactive `DigSpot` instances distributed across the beach.
+
+---
+
+### Phase 2: Coastal Water Shader, Fishing Minigame, and Fish Catch Registry
+- [ ] **Coastal Water Shader & Environment**
+  - [ ] 2D procedural water shader with foam edge, wave distortion, and depth gradient.
+  - [ ] Shoreline wet sand effect and tide bobbing dynamics.
+  - [ ] Ambient coastal sound triggers.
+- [ ] **Cast & Bobber Mechanics**
+  - [ ] Cast trajectory with distance charge meter based on rod quality and timing.
+  - [ ] Bobber floating physics on water surface with ripple particles.
+  - [ ] Nibble tension system (subtle tugs requiring player patience).
+- [ ] **Reeling Minigame**
+  - [ ] Cozy tension bar minigame (keeping fish icon within target reel zone).
+  - [ ] Line tension warning and snap failure state.
+  - [ ] Bait consumption upon bite.
+- [ ] **Fish Catch Registry & Species Data**
+  - [ ] Resource-based `FishData` architecture (species, weight, rarity, sell value, preferred bait).
+  - [ ] Catch celebration modal showcasing caught fish sprite, size, and lore blurb.
+  - [ ] Catch logbook / journal indexing discovered coastal species.
+
+---
+
+### Phase 3: Shoreline Fish Drying/Display Rack and Seagull Theft AI
+- [ ] **Fish Drying / Display Rack (`DryingRack.tscn`)**
+  - [ ] Interactive shoreline wooden racks with multiple hanging slots.
+  - [ ] Real-time curing/drying process (Fresh Fish -> Sun-Dried Fish).
+  - [ ] Visual transitions per slot showing drying progress.
+- [ ] **Seagull Theft & Coastal Bird AI (`Seagull.tscn`)**
+  - [ ] State machine: Circling -> Stalking -> Divebomb -> Snatch -> Escape.
+  - [ ] Target prioritization: Unattended fish on drying racks or player's open bucket.
+  - [ ] Player deterrence mechanic: Chasing or waving shovel scares seagulls away.
+- [ ] **Shoreline Audio-Visual Atmosphere**
+  - [ ] Ambient soundscape (rolling surf, coastal winds, distant bird calls).
+  - [ ] Feathers and sand drift particle effects.
+
+---
+
+### Phase 4: Cottage Inventory Hub, NPC Fisher Market, and P2P Trading Data Stubs
+- [ ] **Fisherman's Cottage Interior Hub**
+  - [ ] Cozy indoor scene transition (fireplace, fish storage chest, tackle workbench).
+  - [ ] Extended storage chest for preserving high-grade fish and surplus bait.
+- [ ] **NPC Fisher Market & Economy**
+  - [ ] Old Salt NPC shopkeeper with cozy dialogue tree.
+  - [ ] Sell caught/dried fish for Sea Coins; purchase upgraded rods, tackle, and lures.
+- [ ] **P2P Trading Data Stubs**
+  - [ ] Serializable trade packet schema for peer-to-peer catch exchange.
+  - [ ] Offline export/import ledger format for trade stubs.
+  - [ ] Inventory validation and anti-tamper checksums.
+
+---
+
+## 3. Directory Layout
+
+```text
+res://
+├── ROADMAP.md
+├── project.godot
+├── scenes/
+│   ├── core/
+│   │   └── game_state.tscn (or autoload scripts)
+│   ├── player/
+│   │   ├── player.tscn
+│   │   └── player_visuals.tscn
+│   ├── mechanics/
+│   │   ├── dig_spot.tscn
+│   │   └── floating_text.tscn
+│   ├── ui/
+│   │   └── hud.tscn
+│   └── world/
+│       └── beach_main.tscn
+├── scripts/
+│   ├── core/
+│   │   ├── game_events.gd
+│   │   └── game_state.gd
+│   ├── player/
+│   │   └── player.gd
+│   ├── mechanics/
+│   │   ├── dig_spot.gd
+│   │   └── floating_text.gd
+│   ├── ui/
+│   │   └── hud.gd
+│   └── world/
+│       └── beach_main.gd
+└── assets/
+    ├── textures/
+    ├── shaders/
+    └── audio/
+```
+
+---
+
+## 4. Phase 1 Implementation Plan & Verification
+
+1. **Autoloads**: Implement `GameEvents` and `GameState`.
+2. **Project Settings**: Configure InputMap (`move_left`, `move_right`, `move_up`, `move_down`, `interact`, `tool_next`, `tool_prev`, `tool_slot_1`, `tool_slot_2`, `tool_slot_3`), viewport resolution (1280x720), and autoload registrations in `project.godot`.
+3. **Player Controller**: Create `player.tscn` with `player.gd`, smooth physics movement, tool switching, visual facing direction, and tool interaction detection.
+4. **Worm Digging Mechanic**: Create `dig_spot.tscn` with `dig_spot.gd`, collision detection with player, shovel interaction validation, sand particles, worm drop event, and regeneration timer.
+5. **HUD & Feedback**: Create `hud.tscn` with hotbar, tool icons, bait counter, and `floating_text.tscn` for visual popup on collecting worms.
+6. **Main Beach Scene**: Create `beach_main.tscn` integrating sand shore, boundaries, player, multiple dig spots, camera, and HUD.
+7. **Verification**: Run `godot_rescan_filesystem`, run project test via Godot MCP / command line, confirm clean startup and error-free execution.
+

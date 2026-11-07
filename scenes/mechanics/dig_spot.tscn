@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/mechanics/dig_spot.gd" id="1_dig_spot"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dig"]
+radius = 14.0
+
+[node name="DigSpot" type="Area2D" groups=["interactable", "dig_spot"]]
+z_index = 2
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_dig_spot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dig")
+
+[node name="SandParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.85
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, 120)
+initial_velocity_min = 25.0
+initial_velocity_max = 65.0
+scale_amount_min = 2.0
+scale_amount_max = 3.5
+color = Color(0.86, 0.74, 0.52, 0.95)
+
+[node name="RespawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="BubbleTimer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+

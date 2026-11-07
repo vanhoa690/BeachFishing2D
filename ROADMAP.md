@@ -76,8 +76,8 @@ The project follows a **Decoupled Event-Driven & Component-Centric Architecture*
   - [ ] Line tension warning and snap failure state.
   - [ ] Bait consumption upon bite.
 - [ ] **Fish Catch Registry & Species Data**
-  - [ ] Resource-based `FishData` architecture (species, weight, rarity, sell value, preferred bait).
-  - [ ] Catch celebration modal showcasing caught fish sprite, size, and lore blurb.
+  - [x] Resource-based `FishData` architecture (species, weight, rarity, sell value, preferred bait).
+  - [x] Catch celebration modal showcasing caught fish sprite, size, and lore blurb.
   - [ ] Catch logbook / journal indexing discovered coastal species.
 
 ---

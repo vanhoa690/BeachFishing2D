@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://ceugs0qr76f27" path="res://sprites/fish/fish-sea-bass.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_script")
+id = "sea_bass"
+display_name = "Silver Sea Bass"
+texture = ExtResource("2_texture")
+base_value = 110
+rarity_weight = 0.15
+min_weight = 1.2
+max_weight = 3.8
+description = "A prized silver prize of the deeper coastal breaks, fighting vigorously when hooked."
+

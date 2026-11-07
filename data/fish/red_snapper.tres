@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://d4h3bdbms4wee" path="res://sprites/fish/fish-red-snapper.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_script")
+id = "red_snapper"
+display_name = "Crimson Red Snapper"
+texture = ExtResource("2_texture")
+base_value = 85
+rarity_weight = 0.2
+min_weight = 0.8
+max_weight = 2.4
+description = "A magnificent coastal snapper gleaming with vivid crimson scales."
+

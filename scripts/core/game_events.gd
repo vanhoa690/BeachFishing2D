@@ -23,6 +23,9 @@ signal player_dig_finished()
 @warning_ignore("unused_signal")
 signal notification_banner(message: String)
 
+@warning_ignore("unused_signal")
+signal fish_caught(fish_data: FishData, weight: float)
+
 
 func _enter_tree() -> void:
 	_ensure_input_mappings()
@@ -83,3 +86,7 @@ func emit_player_dig_finished() -> void:
 
 func emit_notification(message: String) -> void:
 	notification_banner.emit(message)
+
+
+func emit_fish_caught(fish_data: FishData, weight: float) -> void:
+	fish_caught.emit(fish_data, weight)

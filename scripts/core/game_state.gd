@@ -31,6 +31,9 @@ var worms_count: int = 0:
 		worms_count = maxi(0, value)
 		GameEvents.worms_count_changed.emit(worms_count)
 
+var caught_fish_registry: Array[Dictionary] = []
+var total_catches: int = 0
+
 
 func _ready() -> void:
 	# Default starting tool: Shovel (ready for digging worms in Phase 1)
@@ -59,6 +62,24 @@ func remove_worms(amount: int) -> bool:
 		worms_count -= amount
 		return true
 	return false
+
+
+func record_fish_catch(fish: FishData, weight: float) -> void:
+	if not fish:
+		return
+	total_catches += 1
+	var entry: Dictionary = {
+		"id": fish.id,
+		"name": fish.display_name,
+		"weight": weight,
+		"value": fish.calculate_value(weight),
+		"timestamp": Time.get_unix_time_from_system()
+	}
+	caught_fish_registry.append(entry)
+
+
+func get_fish_count() -> int:
+	return caught_fish_registry.size()
 
 
 func get_tool_name(tool: ToolType) -> String:

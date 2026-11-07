@@ -1,1 +1,10 @@
 res://scripts/mechanics/dig_spot.gd
+res://scenes/mechanics/bait_pop_effect.tscn
+res://scripts/mechanics/bait_pop_effect.gd
+res://scripts/ui/hud.gd
+res://sprites/earthworm/earthworm_frames.tres
+res://scripts/core/game_events.gd
+res://scripts/core/game_state.gd
+res://scripts/world/beach_main.gd
+res://scripts/resources/fish_data.gd
+res://scripts/ui/catch_popup.gd

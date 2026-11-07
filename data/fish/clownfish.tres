@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bnxj6hgpwmffr" path="res://sprites/fish/fish-clownfish.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_script")
+id = "clownfish"
+display_name = "Ocellaris Clownfish"
+texture = ExtResource("2_texture")
+base_value = 25
+rarity_weight = 0.55
+min_weight = 0.15
+max_weight = 0.45
+description = "A cheerful orange-and-white fish frequently seen exploring coastal tide pools."
+

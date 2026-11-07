@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://chircowjclkd" path="res://sprites/fish/fish-blue-tang.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_script")
+id = "blue_tang"
+display_name = "Pacific Blue Tang"
+texture = ExtResource("2_texture")
+base_value = 55
+rarity_weight = 0.3
+min_weight = 0.4
+max_weight = 0.95
+description = "A striking cobalt fish with bright yellow tail accents, fond of warm coastal reefs."
+

@@ -1,7 +1,7 @@
 class_name BeachMain
 extends Node2D
 ## Main World Controller for Coastal Beach in "Tide & Hook"
-## Coordinates player, camera boundaries, dig spot interactables, and world popups.
+## Coordinates TileMapLayer environment, player, dig spot interactables, and celebrations.
 
 const FLOATING_TEXT_SCENE: PackedScene = preload("res://scenes/mechanics/floating_text.tscn")
 const CATCH_POPUP_SCENE: PackedScene = preload("res://scenes/ui/catch_popup.tscn")
@@ -13,19 +13,26 @@ const FISH_RESOURCES: Array[String] = [
 	"res://data/fish/red_snapper.tres"
 ]
 
+const MAP_WIDTH: int = 1600
+const MAP_HEIGHT: int = 1024
+
 @onready var player: PlayerCharacter = $World/Player
 @onready var camera: Camera2D = $World/Player/Camera2D
-@onready var terrain: BeachTerrain = $Terrain
 @onready var effects_layer: Node2D = $World/Effects
+
+@onready var water_layer: TileMapLayer = $WorldMap/WaterLayer
+@onready var shoreline_layer: TileMapLayer = $WorldMap/ShorelineLayer
+@onready var ground_layer: TileMapLayer = $WorldMap/GroundLayer
+@onready var decor_layer: TileMapLayer = $WorldMap/DecorLayer
 
 
 func _ready() -> void:
 	# Configure Camera boundaries to match coastal sandbox limits
-	if camera and terrain:
+	if camera:
 		camera.limit_left = 0
 		camera.limit_top = 0
-		camera.limit_right = int(terrain.beach_width)
-		camera.limit_bottom = int(terrain.beach_height)
+		camera.limit_right = MAP_WIDTH
+		camera.limit_bottom = MAP_HEIGHT
 
 	# Connect gameplay events
 	GameEvents.worm_dug.connect(_on_worm_dug)
@@ -64,3 +71,23 @@ func _test_catch_random_fish() -> void:
 	var fish: FishData = load(chosen_path) as FishData
 	if fish:
 		GameEvents.fish_caught.emit(fish, -1.0)
+
+
+func is_pos_diggable(world_pos: Vector2) -> bool:
+	if not is_instance_valid(ground_layer):
+		return false
+	var map_coord := ground_layer.local_to_map(ground_layer.to_local(world_pos))
+	var data := ground_layer.get_cell_tile_data(map_coord)
+	if data and data.get_custom_data("is_diggable"):
+		return true
+	return false
+
+
+func is_pos_water(world_pos: Vector2) -> bool:
+	if not is_instance_valid(water_layer):
+		return false
+	var map_coord := water_layer.local_to_map(water_layer.to_local(world_pos))
+	var data := water_layer.get_cell_tile_data(map_coord)
+	if data and data.get_custom_data("is_water"):
+		return true
+	return false

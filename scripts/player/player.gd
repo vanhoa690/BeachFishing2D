@@ -152,7 +152,16 @@ func _check_interaction_target() -> void:
 			var prompt_text: String = targeted_interactable.get_interaction_prompt()
 			GameEvents.interaction_prompt_requested.emit(prompt_text, targeted_interactable.global_position, true)
 		else:
-			GameEvents.interaction_prompt_requested.emit("", Vector2.ZERO, false)
+			# Check if facing an is_diggable mud patch tile
+			var check_pos := global_position + facing_direction * 22.0
+			var current_world := get_tree().current_scene
+			if current_world and current_world.has_method("is_pos_diggable") and current_world.is_pos_diggable(check_pos):
+				if GameState.current_tool == GameState.ToolType.SHOVEL:
+					GameEvents.interaction_prompt_requested.emit("Press [Space] to Dig Mud Patch", check_pos, true)
+				else:
+					GameEvents.interaction_prompt_requested.emit("Shovel needed! Press [2] to equip", check_pos, true)
+			else:
+				GameEvents.interaction_prompt_requested.emit("", Vector2.ZERO, false)
 
 
 func _handle_interaction() -> void:
@@ -165,9 +174,30 @@ func _handle_interaction() -> void:
 			targeted_interactable.interact(self)
 			return
 
-	# If shovel is equipped and player uses action in open sand
+	# If shovel is equipped and player uses action in open ground
 	if GameState.current_tool == GameState.ToolType.SHOVEL:
-		perform_dig(global_position + facing_direction * 20.0)
+		var dig_target := global_position + facing_direction * 20.0
+		var current_world := get_tree().current_scene
+		var is_mud_patch: bool = false
+		if current_world and current_world.has_method("is_pos_diggable"):
+			is_mud_patch = current_world.is_pos_diggable(dig_target)
+
+		if is_mud_patch:
+			perform_mud_dig(dig_target)
+		else:
+			perform_dig(dig_target)
+
+
+func perform_mud_dig(dig_pos: Vector2) -> void:
+	perform_dig(dig_pos)
+	
+	# Spawn animated wriggling bait pop effect from the mud patch
+	var pop_scene: PackedScene = load("res://scenes/mechanics/bait_pop_effect.tscn")
+	if pop_scene:
+		var pop_inst = pop_scene.instantiate()
+		pop_inst.global_position = dig_pos
+		get_parent().add_child(pop_inst)
+		pop_inst.launch(randi_range(1, 2), self)
 
 
 func perform_dig(dig_pos: Vector2) -> void:

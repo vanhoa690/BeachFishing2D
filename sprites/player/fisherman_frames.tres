@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://i4kopmsavskw" path="res://sprites/player/fisherman-walk-right-frame-2.png" id="10_right2"]
 [ext_resource type="Texture2D" uid="uid://cf5kmf2wwo7oh" path="res://sprites/player/fisherman-walk-right-frame-3.png" id="11_right3"]
 [ext_resource type="Texture2D" uid="uid://c423l70aautvs" path="res://sprites/player/fisherman-walk-right-frame-4.png" id="12_right4"]
-[ext_resource type="Texture2D" uid="uid://c1pxit4cgogon" path="res://sprites/player/fisherman-walk-up-frame-1.png" id="13_up1"]
+[ext_resource type="Texture2D" uid="uid://52tje3dog12q" path="res://sprites/player/fisherman-walk-up-frame-1.png" id="13_up1"]
 [ext_resource type="Texture2D" uid="uid://cwelalc2tmrjv" path="res://sprites/player/fisherman-walk-up-frame-2.png" id="14_up2"]
 [ext_resource type="Texture2D" uid="uid://bwnk77l7qqo74" path="res://sprites/player/fisherman-walk-up-frame-3.png" id="15_up3"]
 [ext_resource type="Texture2D" uid="uid://joo3dy0p4ojm" path="res://sprites/player/fisherman-walk-up-frame-4.png" id="16_up4"]

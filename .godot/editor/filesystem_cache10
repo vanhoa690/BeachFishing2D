@@ -1,14 +1,14 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1794037057
+::res://::1794037688
 icon.svg::CompressedTexture2D::613720911867886901::1794021012::1794021027::1::::<><><>0<>0<>8e03fa37679a4597c939c0549855c803<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-ROADMAP.md::TextFile::-1::1794037018::0::1::::<><><>0<>0<><>::
+ROADMAP.md::TextFile::-1::1794037253::0::1::::<><><>0<>0<><>::
 ::res://addons/::1794021048
 ::res://addons/godot_mcp/::1794021177
 mcp_bridge_plugin.gd::GDScript::3498813453814180453::1794021177::0::1::::<>EditorPlugin<><>0<>1<><>::
 plugin.cfg::TextFile::-1::1794021177::0::1::::<><><>0<>0<><>::
 ::res://assets/::1794036998
 ::res://assets/tilesets/::1794037057
-::res://assets/tilesets/beach/::1794037188
+::res://assets/tilesets/beach/::1794037654
 beach-tile-r1c1.png::CompressedTexture2D::4521696661106857880::1794037043::1794037058::1::::<><><>0<>0<>dff93ad0f6a80d91206ab64e8348d9bb<>res://.godot/imported/beach-tile-r1c1.png-145eaf444cb9cec8b690d31bf1de76ca.ctex::
 beach-tile-r1c2.png::CompressedTexture2D::3705280918189349957::1794037043::1794037058::1::::<><><>0<>0<>0d8680fb9589b3a8ae5b6a3ab32f7b7d<>res://.godot/imported/beach-tile-r1c2.png-d2ff2525da27bbe1ec77eb6796d5f959.ctex::
 beach-tile-r1c3.png::CompressedTexture2D::5732024265271469702::1794037043::1794037058::1::::<><><>0<>0<>b42c4a39ea5b1ef0f1a81964895bf142<>res://.godot/imported/beach-tile-r1c3.png-882e15bacff8ace91c944903c5441e5b.ctex::
@@ -74,6 +74,8 @@ beach-tile-r8c6.png::CompressedTexture2D::2392438998757042041::1794037043::17940
 beach-tile-r8c7.png::CompressedTexture2D::7497530823664430474::1794037043::1794037058::1::::<><><>0<>0<>36b2bc5eac18a8eea9199092de3b3a0f<>res://.godot/imported/beach-tile-r8c7.png-ae555a878321aa5dc4d23e9c76e35947.ctex::
 beach-tile-r8c8.png::CompressedTexture2D::9219798876803500109::1794037043::1794037058::1::::<><><>0<>0<>4009d69d248122c635c331da3a0f1bfe<>res://.godot/imported/beach-tile-r8c8.png-02471f8a5552136c1353b130b760211d.ctex::
 beach-tileset-sheet.png::CompressedTexture2D::4812933296511326505::1794037188::1794037188::1::::<><><>0<>0<>a87c048494b993ece8f8c4a13932e4c9<>res://.godot/imported/beach-tileset-sheet.png-62cbd2a061923faeb744ab4f8ad081d0.ctex::
+beach_tileset.png::CompressedTexture2D::5166659359078810559::1794037605::1794037615::1::::<><><>0<>0<>20aeb9b94a2ab8d038f86700a40ddaae<>res://.godot/imported/beach_tileset.png-8afc72cbdd44c489b1d56183e0634771.ctex::
+beach_tileset.tres::TileSet::-1::1794037654::0::1::::<><><>0<>0<><>::uid://cfu1eiits3872::::res://assets/tilesets/beach/beach_tileset.png
 ::res://data/::1794036845
 ::res://data/fish/::1794036862
 blue_tang.tres::Resource/FishData::-1::1794037036::0::1::::<><><>0<>0<><>::res://scripts/resources/fish_data.gd<>uid://chircowjclkd::::res://sprites/fish/fish-blue-tang.png
@@ -142,7 +144,8 @@ fisherman-walk-up-frame-2.png::CompressedTexture2D::6325921907458683643::1794035
 fisherman-walk-up-frame-3.png::CompressedTexture2D::3958078169081226197::1794035440::1794035547::1::::<><><>0<>0<>606e766dbf1a182a8ded583bd48c3b2f<>res://.godot/imported/fisherman-walk-up-frame-3.png-65b6203a3f49886b8901ac26e24c3bfe.ctex::
 fisherman-walk-up-frame-4.png::CompressedTexture2D::661501117229639278::1794035440::1794035547::1::::<><><>0<>0<>0fbaa19fc6f1ca761a22933ea037107c<>res://.godot/imported/fisherman-walk-up-frame-4.png-606a960aca6dc09d3edb8b0c5b80c018.ctex::
 fisherman_frames.tres::SpriteFrames::-1::1794025174::0::1::::<><><>0<>0<><>::uid://dwf38ol2ria07::::res://sprites/player/fisherman-walk-down-frame-1.png<>uid://cti67yo6hgn5b::::res://sprites/player/fisherman-walk-down-frame-2.png<>uid://5jshhed5wpvg::::res://sprites/player/fisherman-walk-down-frame-3.png<>uid://qm6rb6760081::::res://sprites/player/fisherman-walk-down-frame-4.png<>uid://be2l14fdev1xq::::res://sprites/player/fisherman-walk-left-frame-1.png<>uid://cjc5xtb2woxgh::::res://sprites/player/fisherman-walk-left-frame-2.png<>uid://ccq1ajy6kyo6n::::res://sprites/player/fisherman-walk-left-frame-3.png<>uid://c5kj6awfos1te::::res://sprites/player/fisherman-walk-left-frame-4.png<>uid://ddcerwcqpnrjs::::res://sprites/player/fisherman-walk-right-frame-1.png<>uid://i4kopmsavskw::::res://sprites/player/fisherman-walk-right-frame-2.png<>uid://cf5kmf2wwo7oh::::res://sprites/player/fisherman-walk-right-frame-3.png<>uid://c423l70aautvs::::res://sprites/player/fisherman-walk-right-frame-4.png<>uid://c1pxit4cgogon::::res://sprites/player/fisherman-walk-up-frame-1.png<>uid://cwelalc2tmrjv::::res://sprites/player/fisherman-walk-up-frame-2.png<>uid://bwnk77l7qqo74::::res://sprites/player/fisherman-walk-up-frame-3.png<>uid://joo3dy0p4ojm::::res://sprites/player/fisherman-walk-up-frame-4.png
-::res://tools/::1794021622
+::res://tools/::1794037761
+generate_beach_scene.gd::GDScript::1087853745502024790::1794037761::0::1::::<>SceneTree<><>0<>0<><>::
 ::res://tools/mcp-godot-server/::1794021734
 package-lock.json::JSON::-1::1794021739::0::1::::<><><>0<>0<><>::
 package.json::JSON::-1::1794021273::0::1::::<><><>0<>0<><>::

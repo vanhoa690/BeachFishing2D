@@ -61,6 +61,8 @@ func _ready() -> void:
 	GameEvents.worms_count_changed.connect(_on_worms_count_changed)
 	GameEvents.fish_inventory_changed.connect(_on_fish_inventory_changed)
 	GameEvents.sea_coins_changed.connect(_on_coins_changed)
+	if is_instance_valid(EconomyManager) and EconomyManager.has_signal("coins_changed"):
+		EconomyManager.coins_changed.connect(_on_coins_changed)
 	GameEvents.interaction_prompt_requested.connect(_on_interaction_prompt_requested)
 	GameEvents.notification_banner.connect(show_notification)
 
@@ -178,7 +180,7 @@ func _on_fish_inventory_changed(inventory: Array) -> void:
 
 func _on_coins_changed(new_coins: int) -> void:
 	if is_instance_valid(coin_label):
-		coin_label.text = "%d" % new_coins
+		coin_label.text = "x %d" % new_coins
 
 	if is_instance_valid(coin_panel) and is_inside_tree():
 		var tween := create_tween()

@@ -220,3 +220,60 @@ func get_fish_count() -> int:
 func get_tool_name(tool: ToolType) -> String:
 	return TOOL_NAMES.get(tool, "Unknown Tool")
 
+
+## Serializes inventory, chest storage, and coin balances into a local dictionary for saving.
+func save_state_to_dict() -> Dictionary:
+	var coins_val: int = EconomyManager.sea_coins if (Engine.has_singleton("EconomyManager") or is_instance_valid(EconomyManager)) else 0
+	return {
+		"version": 1,
+		"sea_coins": coins_val,
+		"worms_count": worms_count,
+		"master_bait_count": master_bait_count,
+		"has_pro_rod": has_pro_rod,
+		"total_catches": total_catches,
+		"fish_inventory": fish_inventory.duplicate(true),
+		"chest_storage": chest_storage.duplicate(true),
+		"caught_fish_registry": caught_fish_registry.duplicate(true)
+	}
+
+
+## Deserializes inventory, chest storage, and coin balances from a saved dictionary.
+func load_state_from_dict(data: Dictionary) -> bool:
+	if data.is_empty():
+		return false
+
+	if data.has("sea_coins"):
+		if Engine.has_singleton("EconomyManager") or is_instance_valid(EconomyManager):
+			EconomyManager.sea_coins = int(data["sea_coins"])
+
+	if data.has("worms_count"):
+		worms_count = int(data["worms_count"])
+
+	if data.has("master_bait_count"):
+		master_bait_count = int(data["master_bait_count"])
+
+	if data.has("has_pro_rod"):
+		has_pro_rod = bool(data["has_pro_rod"])
+
+	if data.has("total_catches"):
+		total_catches = int(data["total_catches"])
+
+	if data.has("fish_inventory"):
+		fish_inventory.clear()
+		for item in data["fish_inventory"]:
+			fish_inventory.append(item)
+		GameEvents.fish_inventory_changed.emit(fish_inventory)
+
+	if data.has("chest_storage"):
+		chest_storage.clear()
+		for item in data["chest_storage"]:
+			chest_storage.append(item)
+		GameEvents.chest_storage_changed.emit(chest_storage)
+
+	if data.has("caught_fish_registry"):
+		caught_fish_registry.clear()
+		for entry in data["caught_fish_registry"]:
+			caught_fish_registry.append(entry)
+
+	return true
+

@@ -137,7 +137,7 @@ func _render_sell_list() -> void:
 
 	if is_instance_valid(btn_sell_all):
 		btn_sell_all.disabled = inventory.is_empty()
-		btn_sell_all.text = "Sell All (%d 🪙)" % total_val if not inventory.is_empty() else "Sell All"
+		btn_sell_all.text = "Sell All Fish (%d 🪙)" % total_val if not inventory.is_empty() else "Sell All Fish"
 
 	if inventory.is_empty():
 		var empty_lbl := Label.new()
@@ -213,9 +213,9 @@ func _create_sell_row(fish: Dictionary, index: int) -> PanelContainer:
 
 	# Sell button
 	var btn := Button.new()
-	btn.custom_minimum_size = Vector2(70, 28)
+	btn.custom_minimum_size = Vector2(80, 28)
 	btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	btn.text = "Sell"
+	btn.text = "Sell Item"
 	btn.add_theme_font_size_override("font_size", 11)
 	btn.pressed.connect(func():
 		_sell_single_fish(index, fish)

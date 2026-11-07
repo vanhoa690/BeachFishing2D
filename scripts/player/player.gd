@@ -49,8 +49,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Ignore tool swapping while in an active minigame or locked action
-	if fishing_state == FishingState.REELING:
+	if is_locked_action or fishing_state == FishingState.REELING:
 		return
 
 	# Tool Hotkeys (1: Bare Hands, 2: Shovel, 3: Rod)

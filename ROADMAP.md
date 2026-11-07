@@ -103,22 +103,27 @@ The project follows a **Decoupled Event-Driven & Component-Centric Architecture*
 
 ---
 
-### Phase 4: Cottage Inventory Hub, NPC Fisher Market, and P2P Trading Data Stubs
-- [x] **Fisherman's Coastal Cottage Hub & Safe Storage**
-  - [x] Fisherman's Cottage building with static collision (`scenes/world/cottage.tscn`).
-  - [x] Seagull-proof `SafeChest.tscn` with interactive modal `SafeChestModal.tscn` allowing 2-way fish transfers (Store All / Take All / Individual) into persistent `GameState.chest_storage`.
+### Phase 4: Cottage Inventory Hub, NPC Fishmonger Shop, and Economy Loop
 - [x] **Economy & Currency System**
-  - [x] Global `EconomyManager` autoload tracking `sea_coins: int` with reactive `sea_coins_changed` event bus integration.
-  - [x] `HUD.tscn` top-left stats header with `CoinPanel` and animated bounce on earnings/expenditures.
-- [x] **NPC Fishmonger & Shop System (`FishMarketNPC.tscn`)**
-  - [x] Animated merchant NPC "Old Salt Finn" placed near the cottage on the beach.
-  - [x] Full-featured shop modal `MarketModal.tscn`:
-    - "Sell Fish" tab: lists basket catches, individual selling, and "Sell All" batch conversion into Sea Coins.
-    - "Buy Tackle" tab: Sand Worms (5 coins), Master Bait (25 coins, boost bite speed/rarity), and Pro Fiber Rod (150 coins, +60px casting range).
-    - Player movement locking and responsive UI animation.
-- [x] **P2P Multiplayer Market Data Stubs (`multiplayer_market_stub.gd`)**
-  - [x] Robust serializable JSON schema contract (`seller_id`, `item_id`, `item_data`, `price`, `listing_timestamp`).
-  - [x] Complete contract validation, serialization, mock market board, and pre-populated community listings for peer trading.
+  - [x] Global `EconomyManager` autoload singleton (`res://scripts/managers/economy_manager.gd`) tracking `sea_coins: int`, with `coins_changed` signal and `add_coins` / `spend_coins` API.
+  - [x] `HUD.tscn` updated with top-left Coin Display slot ("Coins: x 0") reacting smoothly to `coins_changed` with punchy tween bounce.
+- [x] **Safe Storage Chest System (`SafeChest.tscn`)**
+  - [x] Wooden storage chest prop (`res://scenes/props/SafeChest.tscn`) placed next to coastal cottage.
+  - [x] Interactive `Area2D` trigger opening split inventory modal `StorageChestModal.tscn`.
+  - [x] Left column: Player Fish Basket (`InventoryManager`); Right column: Safe Chest Storage (12 slots).
+  - [x] "Deposit All", "Take All", and individual item transfer buttons.
+  - [x] Complete seagull immunity: fish stored in the chest are detached from world drying racks and never targeted by birds.
+- [x] **NPC Fishmonger & Trading Shop (`FishmongerNPC.tscn`)**
+  - [x] Coastal merchant NPC "Old Salt Finn" placed on the beach with idle animation and "Press [E] to Talk" interaction prompt.
+  - [x] Comprehensive modal `MarketModal.tscn` with:
+    - Tab 1: "Sell Catch" — Fish cards with thumbnails, weights, and values, individual "Sell Item" buttons, and "Sell All Fish" one-click button.
+    - Tab 2: "Tackle Shop" — Earthworm Bait (5 Coins), Chum / Master Bait (25 Coins), and Pro Fiber Rod (150 Coins, +60px casting distance).
+    - Player movement & fishing input pausing while modal is active.
+    - Modal dismissable via [Escape], [E], or close button.
+- [x] **Architecture, Persistence & Multiplayer Stubs**
+  - [x] Full state serialization to dictionary: `GameState.save_state_to_dict()`, `GameState.load_state_from_dict()`, `InventoryManager.serialize()`, and `EconomyManager.serialize()`.
+  - [x] Network schema contract: `res://scripts/network/market_listing_schema.gd` defining JSON specification and validation for future multiplayer trade boards.
+  - [x] P2P market mock service: `res://scripts/core/multiplayer_market_stub.gd`.
 
 ---
 

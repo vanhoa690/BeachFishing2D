@@ -1,0 +1,207 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/storage_chest_modal.gd" id="1_modal_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_panel"]
+bg_color = Color(0.12, 0.11, 0.1, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.68, 0.35, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_column_bg"]
+bg_color = Color(0.08, 0.08, 0.07, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.28, 0.25, 0.2, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="StorageChestModal" type="CanvasLayer"]
+layer = 12
+script = ExtResource("1_modal_script")
+
+[node name="Dimmer" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.05, 0.06, 0.65)
+
+[node name="Center" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(640, 430)
+layout_mode = 2
+pivot_offset = Vector2(320, 215)
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_panel")
+
+[node name="Margin" type="MarginContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HeaderHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="TitleVBox" type="VBoxContainer" parent="Center/Panel/Margin/VBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Center/Panel/Margin/VBox/HeaderHBox/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+theme_override_font_sizes/font_size = 18
+text = "🔒 Coastal Safe Storage Chest"
+
+[node name="Subtitle" type="Label" parent="Center/Panel/Margin/VBox/HeaderHBox/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 0.8)
+theme_override_font_sizes/font_size = 11
+text = "Fish deposited here are safe from thieving seagulls! (Up to 12 Slots)"
+
+[node name="BtnClose" type="Button" parent="Center/Panel/Margin/VBox/HeaderHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 0
+text = "✕"
+
+[node name="HSeparator" type="HSeparator" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="ColumnsHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="BasketColumn" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="TopHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/BasketColumn"]
+layout_mode = 2
+
+[node name="BasketCountLabel" type="Label" parent="Center/Panel/Margin/VBox/ColumnsHBox/BasketColumn/TopHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.85, 0.75, 1)
+theme_override_font_sizes/font_size = 13
+text = "🧺 Fish Basket (0)"
+
+[node name="BtnDepositAll" type="Button" parent="Center/Panel/Margin/VBox/ColumnsHBox/BasketColumn/TopHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Deposit All ➔"
+
+[node name="BasketPanel" type="PanelContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/BasketColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_column_bg")
+
+[node name="BasketMargin" type="MarginContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/BasketColumn/BasketPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="BasketScroll" type="ScrollContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/BasketColumn/BasketPanel/BasketMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="BasketList" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/BasketColumn/BasketPanel/BasketMargin/BasketScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="ChestColumn" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="TopHBox2" type="HBoxContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/ChestColumn"]
+layout_mode = 2
+
+[node name="ChestCountLabel" type="Label" parent="Center/Panel/Margin/VBox/ColumnsHBox/ChestColumn/TopHBox2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.85, 0.75, 1)
+theme_override_font_sizes/font_size = 13
+text = "🔒 Safe Storage Chest (0/12)"
+
+[node name="BtnTakeAll" type="Button" parent="Center/Panel/Margin/VBox/ColumnsHBox/ChestColumn/TopHBox2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "⬅ Take All"
+
+[node name="ChestPanel" type="PanelContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/ChestColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_column_bg")
+
+[node name="ChestMargin" type="MarginContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/ChestColumn/ChestPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ChestScroll" type="ScrollContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/ChestColumn/ChestPanel/ChestMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ChestList" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ColumnsHBox/ChestColumn/ChestPanel/ChestMargin/ChestScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="FooterHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="Tips" type="Label" parent="Center/Panel/Margin/VBox/FooterHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.8)
+theme_override_font_sizes/font_size = 11
+text = "Items in safe storage can never be stolen by seagulls."
+
+[node name="BtnDone" type="Button" parent="Center/Panel/Margin/VBox/FooterHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 28)
+layout_mode = 2
+text = "Done [E / ESC]"
+

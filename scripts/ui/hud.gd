@@ -5,7 +5,6 @@ extends CanvasLayer
 @onready var slot_hands: PanelContainer = %SlotHands
 @onready var slot_shovel: PanelContainer = %SlotShovel
 @onready var slot_rod: PanelContainer = %SlotRod
-@onready var slot_rack: PanelContainer = %SlotRack
 @onready var tool_info_label: Label = %ToolInfoLabel
 
 @onready var worms_label: Label = %WormCount
@@ -36,8 +35,6 @@ func _ready() -> void:
 		slot_shovel = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotShovel")
 	if not slot_rod:
 		slot_rod = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotRod")
-	if not slot_rack:
-		slot_rack = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotRack")
 	if not btn_fullscreen:
 		btn_fullscreen = get_node_or_null("Root/TopMargin/TopRightControls/WindowControls/BtnFullscreen")
 	if not btn_quit:
@@ -50,8 +47,6 @@ func _ready() -> void:
 		slots.append(slot_shovel)
 	if slot_rod:
 		slots.append(slot_rod)
-	if slot_rack:
-		slots.append(slot_rack)
 	
 	# Connect button signals
 	if is_instance_valid(btn_fullscreen):

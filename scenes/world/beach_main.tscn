@@ -122,7 +122,10 @@ position_smoothing_speed = 6.0
 y_sort_enabled = true
 
 [node name="ShorelineRack" parent="World" instance=ExtResource("9_rack")]
-position = Vector2(610, 430)
+position = Vector2(620, 420)
+
+[node name="CottageRack" parent="World" instance=ExtResource("9_rack")]
+position = Vector2(1010, 410)
 
 [node name="SafeCrate" parent="World" instance=ExtResource("10_crate")]
 position = Vector2(1050, 450)

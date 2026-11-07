@@ -5,22 +5,19 @@ extends Node
 enum ToolType {
 	NONE = 0,
 	SHOVEL = 1,
-	FISHING_ROD = 2,
-	DRYING_RACK = 3
+	FISHING_ROD = 2
 }
 
 const TOOL_NAMES: Dictionary = {
 	ToolType.NONE: "Bare Hands",
 	ToolType.SHOVEL: "Sand Shovel",
-	ToolType.FISHING_ROD: "Bamboo Rod",
-	ToolType.DRYING_RACK: "Drying Rack Kit"
+	ToolType.FISHING_ROD: "Bamboo Rod"
 }
 
 const TOOL_DESCRIPTIONS: Dictionary = {
 	ToolType.NONE: "Use your hands to interact or inspect.",
 	ToolType.SHOVEL: "Dig for juicy sand worms near coastal mounds.",
-	ToolType.FISHING_ROD: "Cast your line into the azure sea.",
-	ToolType.DRYING_RACK: "Deploy a wooden fish curing rack on the sand."
+	ToolType.FISHING_ROD: "Cast your line into the azure sea."
 }
 
 var current_tool: ToolType = ToolType.NONE:
@@ -37,6 +34,10 @@ var worms_count: int = 1:
 var caught_fish_registry: Array[Dictionary] = []
 var total_catches: int = 0
 var fish_inventory: Array[Dictionary] = []
+
+var fish_count: int:
+	get:
+		return fish_inventory.size()
 
 const REGISTERED_FISH_PATHS: Array[String] = [
 	"res://data/fish/clownfish.tres",

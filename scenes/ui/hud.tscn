@@ -352,29 +352,6 @@ theme_override_font_sizes/font_size = 20
 text = "🎣"
 horizontal_alignment = 1
 
-[node name="SlotRack" type="PanelContainer" parent="Root/HotbarMargin/HotbarContainer/Hotbar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-pivot_offset = Vector2(32, 32)
-theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
-
-[node name="VBox" type="VBoxContainer" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotRack"]
-layout_mode = 2
-alignment = 1
-
-[node name="KeyLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotRack/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.8)
-theme_override_font_sizes/font_size = 10
-text = "[4]"
-horizontal_alignment = 1
-
-[node name="IconLabel" type="Label" parent="Root/HotbarMargin/HotbarContainer/Hotbar/SlotRack/VBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "🪵"
-horizontal_alignment = 1
 
 [node name="PromptContainer" type="Control" parent="Root"]
 layout_mode = 1

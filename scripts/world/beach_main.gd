@@ -5,6 +5,7 @@ extends Node2D
 
 const FLOATING_TEXT_SCENE: PackedScene = preload("res://scenes/mechanics/floating_text.tscn")
 const CATCH_POPUP_SCENE: PackedScene = preload("res://scenes/ui/catch_popup.tscn")
+const SEAGULL_SCENE: PackedScene = preload("res://scenes/world/seagull.tscn")
 
 const FISH_RESOURCES: Array[String] = [
 	"res://data/fish/clownfish.tres",
@@ -25,6 +26,8 @@ const MAP_HEIGHT: int = 1024
 @onready var ground_layer: TileMapLayer = $WorldMap/GroundLayer
 @onready var decor_layer: TileMapLayer = $WorldMap/DecorLayer
 
+var _seagull_timer: float = 0.0
+
 
 func _ready() -> void:
 	# Configure Camera boundaries to match coastal sandbox limits
@@ -37,6 +40,20 @@ func _ready() -> void:
 	# Connect gameplay events
 	GameEvents.worm_dug.connect(_on_worm_dug)
 	GameEvents.fish_caught.connect(_on_fish_caught)
+
+
+func _process(delta: float) -> void:
+	_seagull_timer += delta
+	if _seagull_timer >= 6.0:
+		_seagull_timer = 0.0
+		var seagulls = get_tree().get_nodes_in_group("seagull")
+		if seagulls.size() < 2 and SEAGULL_SCENE:
+			var new_gull: Node2D = SEAGULL_SCENE.instantiate() as Node2D
+			var from_left: bool = randf() > 0.5
+			var spawn_x: float = 200.0 if from_left else 1500.0
+			var spawn_y: float = randf_range(200.0, 700.0)
+			new_gull.position = Vector2(spawn_x, spawn_y)
+			$World.add_child(new_gull)
 
 
 func _unhandled_input(event: InputEvent) -> void:

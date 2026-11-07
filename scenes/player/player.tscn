@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
-[ext_resource type="Script" path="res://scripts/player/player_visuals.gd" id="2_visuals"]
+[ext_resource type="SpriteFrames" path="res://sprites/player/fisherman_frames.tres" id="2_frames"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 7.0
@@ -13,12 +13,20 @@ collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_player")
 
+[node name="Shadow" type="Polygon2D" parent="."]
+position = Vector2(0, 7)
+color = Color(0.12, 0.16, 0.22, 0.3)
+polygon = PackedVector2Array(-8, -2, -6, -4, 0, -5, 6, -4, 8, -2, 8, 2, 6, 4, 0, 5, -6, 4, -8, 2)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+scale = Vector2(0.08, 0.08)
+sprite_frames = ExtResource("2_frames")
+animation = &"idle_down"
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_player")
-
-[node name="Visuals" type="Node2D" parent="."]
-script = ExtResource("2_visuals")
 
 [node name="InteractionRay" type="RayCast2D" parent="."]
 target_position = Vector2(0, 36)
@@ -42,4 +50,3 @@ initial_velocity_max = 70.0
 scale_amount_min = 2.0
 scale_amount_max = 3.5
 color = Color(0.88, 0.77, 0.53, 0.95)
-

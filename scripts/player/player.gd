@@ -1,13 +1,14 @@
 class_name PlayerCharacter
 extends CharacterBody2D
 ## Top-down 2D Player Controller for "Tide & Hook"
-## Handles smooth acceleration/friction, tool equipment, aiming, and digging actions.
+## Handles smooth acceleration/friction, animated sprite directional walk cycles, and tool actions.
 
 @export var move_speed: float = 150.0
 @export var acceleration: float = 950.0
 @export var friction: float = 1200.0
+@export var sprite_scale: Vector2 = Vector2(0.08, 0.08)
 
-@onready var visuals: Node2D = $Visuals
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var interaction_ray: RayCast2D = $InteractionRay
 @onready var dig_particles: CPUParticles2D = $DigParticles
 
@@ -19,9 +20,9 @@ var targeted_interactable: Node = null
 func _ready() -> void:
 	# Connect to global events
 	GameEvents.tool_changed.connect(_on_tool_changed)
-	if visuals:
-		visuals.set_tool(GameState.current_tool)
-		visuals.facing_direction = facing_direction
+	if animated_sprite:
+		animated_sprite.scale = sprite_scale
+		animated_sprite.play(&"idle_down")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -53,8 +54,7 @@ func _physics_process(delta: float) -> void:
 	if is_locked_action:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 		move_and_slide()
-		if visuals:
-			visuals.is_moving = false
+		_update_animation(true)
 		return
 
 	var input_vector := _get_input_vector()
@@ -62,17 +62,58 @@ func _physics_process(delta: float) -> void:
 	if input_vector != Vector2.ZERO:
 		facing_direction = input_vector
 		velocity = velocity.move_toward(input_vector * move_speed, acceleration * delta)
-		if visuals:
-			visuals.is_moving = true
-			visuals.facing_direction = facing_direction
+		_update_animation(false)
 		_update_interaction_ray()
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
-		if visuals:
-			visuals.is_moving = false
+		if velocity.length() < 5.0:
+			velocity = Vector2.ZERO
+			_update_animation(true)
+		else:
+			_update_animation(false)
 
 	move_and_slide()
 	_check_interaction_target()
+
+
+func _update_animation(is_stopped: bool) -> void:
+	if not is_instance_valid(animated_sprite):
+		return
+
+	if is_stopped:
+		var anim_name: StringName = _get_idle_animation()
+		if animated_sprite.animation != anim_name:
+			animated_sprite.play(anim_name)
+	else:
+		var anim_name: StringName = _get_walk_animation()
+		if animated_sprite.animation != anim_name:
+			animated_sprite.play(anim_name)
+
+
+func _get_walk_animation() -> StringName:
+	if abs(velocity.x) > abs(velocity.y):
+		if velocity.x > 0:
+			return &"walk_right"
+		else:
+			return &"walk_left"
+	else:
+		if velocity.y > 0:
+			return &"walk_down"
+		else:
+			return &"walk_up"
+
+
+func _get_idle_animation() -> StringName:
+	if abs(facing_direction.x) > abs(facing_direction.y):
+		if facing_direction.x > 0:
+			return &"idle_right"
+		else:
+			return &"idle_left"
+	else:
+		if facing_direction.y > 0:
+			return &"idle_down"
+		else:
+			return &"idle_up"
 
 
 func _get_input_vector() -> Vector2:
@@ -134,8 +175,12 @@ func perform_dig(dig_pos: Vector2) -> void:
 		return
 
 	is_locked_action = true
-	if visuals:
-		visuals.play_dig_animation(0.42)
+	_update_animation(true)
+	
+	if animated_sprite:
+		var tween := create_tween()
+		tween.tween_property(animated_sprite, "scale", Vector2(sprite_scale.x * 1.15, sprite_scale.y * 0.85), 0.15)
+		tween.tween_property(animated_sprite, "scale", sprite_scale, 0.25)
 	
 	if dig_particles:
 		dig_particles.position = facing_direction * 22.0
@@ -151,7 +196,5 @@ func perform_dig(dig_pos: Vector2) -> void:
 	)
 
 
-func _on_tool_changed(new_tool: int) -> void:
-	if visuals:
-		visuals.set_tool(new_tool)
-
+func _on_tool_changed(_new_tool: int) -> void:
+	pass

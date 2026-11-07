@@ -1,0 +1,122 @@
+[gd_resource type="SpriteFrames" load_steps=18 format=3]
+
+[ext_resource type="Texture2D" uid="uid://dwf38ol2ria07" path="res://sprites/player/fisherman-walk-down-frame-1.png" id="1_down1"]
+[ext_resource type="Texture2D" uid="uid://cti67yo6hgn5b" path="res://sprites/player/fisherman-walk-down-frame-2.png" id="2_down2"]
+[ext_resource type="Texture2D" uid="uid://5jshhed5wpvg" path="res://sprites/player/fisherman-walk-down-frame-3.png" id="3_down3"]
+[ext_resource type="Texture2D" uid="uid://qm6rb6760081" path="res://sprites/player/fisherman-walk-down-frame-4.png" id="4_down4"]
+[ext_resource type="Texture2D" uid="uid://be2l14fdev1xq" path="res://sprites/player/fisherman-walk-left-frame-1.png" id="5_left1"]
+[ext_resource type="Texture2D" uid="uid://cjc5xtb2woxgh" path="res://sprites/player/fisherman-walk-left-frame-2.png" id="6_left2"]
+[ext_resource type="Texture2D" uid="uid://ccq1ajy6kyo6n" path="res://sprites/player/fisherman-walk-left-frame-3.png" id="7_left3"]
+[ext_resource type="Texture2D" uid="uid://c5kj6awfos1te" path="res://sprites/player/fisherman-walk-left-frame-4.png" id="8_left4"]
+[ext_resource type="Texture2D" uid="uid://ddcerwcqpnrjs" path="res://sprites/player/fisherman-walk-right-frame-1.png" id="9_right1"]
+[ext_resource type="Texture2D" uid="uid://i4kopmsavskw" path="res://sprites/player/fisherman-walk-right-frame-2.png" id="10_right2"]
+[ext_resource type="Texture2D" uid="uid://cf5kmf2wwo7oh" path="res://sprites/player/fisherman-walk-right-frame-3.png" id="11_right3"]
+[ext_resource type="Texture2D" uid="uid://c423l70aautvs" path="res://sprites/player/fisherman-walk-right-frame-4.png" id="12_right4"]
+[ext_resource type="Texture2D" uid="uid://c1pxit4cgogon" path="res://sprites/player/fisherman-walk-up-frame-1.png" id="13_up1"]
+[ext_resource type="Texture2D" uid="uid://cwelalc2tmrjv" path="res://sprites/player/fisherman-walk-up-frame-2.png" id="14_up2"]
+[ext_resource type="Texture2D" uid="uid://bwnk77l7qqo74" path="res://sprites/player/fisherman-walk-up-frame-3.png" id="15_up3"]
+[ext_resource type="Texture2D" uid="uid://joo3dy0p4ojm" path="res://sprites/player/fisherman-walk-up-frame-4.png" id="16_up4"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_down1")
+}],
+"loop": false,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_left1")
+}],
+"loop": false,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_right1")
+}],
+"loop": false,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_up1")
+}],
+"loop": false,
+"name": &"idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_down1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_down2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_down3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_down4")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_left1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_left2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_left3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_left4")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_right1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_right2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_right3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_right4")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_up1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_up2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_up3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_up4")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 8.0
+}]
+

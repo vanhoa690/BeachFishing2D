@@ -32,4 +32,3 @@ func _on_worm_dug(amount: int, world_pos: Vector2) -> void:
 	var label_msg: String = "+%d Sand Worm%s!" % [amount, "s" if amount > 1 else ""]
 	effects_layer.add_child(text_inst)
 	text_inst.setup(label_msg, Color(1.0, 0.88, 0.42))
-

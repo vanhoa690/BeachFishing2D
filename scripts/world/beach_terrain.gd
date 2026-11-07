@@ -93,4 +93,3 @@ func _draw() -> void:
 		var p: Vector2 = shell["pos"]
 		draw_circle(p, shell["size"], shell["color"])
 		draw_arc(p, shell["size"], 0.0, PI, 6, shell["color"].darkened(0.2), 1.0)
-

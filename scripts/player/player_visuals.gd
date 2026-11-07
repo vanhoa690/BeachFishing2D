@@ -49,6 +49,7 @@ func set_tool(tool_type: int) -> void:
 func _draw() -> void:
 	var bob_offset: float = sin(walk_cycle) * 2.0 if is_moving else 0.0
 	var step_tilt: float = cos(walk_cycle) * 0.08 if is_moving else 0.0
+	var tilt_x: float = step_tilt * 12.0
 	
 	# 1. Soft Drop Shadow
 	draw_circle(Vector2(0, 10), 12.0, Color(0.08, 0.12, 0.18, 0.28))
@@ -59,17 +60,17 @@ func _draw() -> void:
 	draw_circle(Vector2(-5, 9 + left_foot_offset), 3.5, boot_color)
 	draw_circle(Vector2(5, 9 + right_foot_offset), 3.5, boot_color)
 
-	# 3. Torso / Raincoat
-	var body_rect := Rect2(-8, -6 + bob_offset, 16, 14)
+	# 3. Torso / Raincoat (with dynamic walk step tilt)
+	var body_rect := Rect2(-8 + tilt_x * 0.35, -6 + bob_offset, 16, 14)
 	draw_rect(body_rect, body_color, true)
 	# Raincoat collar / trim
-	draw_line(Vector2(0, -6 + bob_offset), Vector2(0, 6 + bob_offset), body_color.darkened(0.2), 2.0)
+	draw_line(Vector2(tilt_x * 0.35, -6 + bob_offset), Vector2(tilt_x * 0.35, 6 + bob_offset), body_color.darkened(0.2), 2.0)
 	# Raincoat toggle buttons
-	draw_circle(Vector2(0, -2 + bob_offset), 1.2, Color(0.1, 0.1, 0.1))
-	draw_circle(Vector2(0, 2 + bob_offset), 1.2, Color(0.1, 0.1, 0.1))
+	draw_circle(Vector2(tilt_x * 0.35, -2 + bob_offset), 1.2, Color(0.1, 0.1, 0.1))
+	draw_circle(Vector2(tilt_x * 0.35, 2 + bob_offset), 1.2, Color(0.1, 0.1, 0.1))
 
 	# 4. Head & Face
-	var head_center := Vector2(0, -11 + bob_offset)
+	var head_center := Vector2(tilt_x * 0.7, -11 + bob_offset)
 	draw_circle(head_center, 7.0, skin_color)
 
 	# Eyes depending on facing direction

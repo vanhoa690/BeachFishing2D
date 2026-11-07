@@ -2,19 +2,19 @@ extends CanvasLayer
 ## In-Game HUD for "Tide & Hook"
 ## Displays tool hotbar with active highlights, bait counter, and interaction prompts.
 
-@onready var slot_hands: PanelContainer = $Root/HotbarMargin/Hotbar/SlotHands
-@onready var slot_shovel: PanelContainer = $Root/HotbarMargin/Hotbar/SlotShovel
-@onready var slot_rod: PanelContainer = $Root/HotbarMargin/Hotbar/SlotRod
-@onready var tool_info_label: Label = $Root/HotbarMargin/HotbarContainer/ToolInfoLabel
+@onready var slot_hands: PanelContainer = %SlotHands
+@onready var slot_shovel: PanelContainer = %SlotShovel
+@onready var slot_rod: PanelContainer = %SlotRod
+@onready var tool_info_label: Label = %ToolInfoLabel
 
-@onready var worms_label: Label = $Root/TopMargin/StatsBox/WormPanel/HBox/WormCount
-@onready var worm_panel: PanelContainer = $Root/TopMargin/StatsBox/WormPanel
+@onready var worms_label: Label = %WormCount
+@onready var worm_panel: PanelContainer = %WormPanel
 
-@onready var prompt_panel: PanelContainer = $Root/PromptContainer/PromptPanel
-@onready var prompt_label: Label = $Root/PromptContainer/PromptPanel/PromptLabel
+@onready var prompt_panel: PanelContainer = %PromptPanel
+@onready var prompt_label: Label = %PromptLabel
 
-@onready var notification_banner: PanelContainer = $Root/NotificationContainer/BannerPanel
-@onready var notification_label: Label = $Root/NotificationContainer/BannerPanel/NotificationLabel
+@onready var notification_banner: PanelContainer = %BannerPanel
+@onready var notification_label: Label = %NotificationLabel
 
 var slots: Array[PanelContainer] = []
 var notif_tween: Tween = null
@@ -22,7 +22,21 @@ var prompt_tween: Tween = null
 
 
 func _ready() -> void:
-	slots = [slot_hands, slot_shovel, slot_rod]
+	# Fallback resolution in case of hierarchy discrepancies
+	if not slot_hands:
+		slot_hands = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotHands")
+	if not slot_shovel:
+		slot_shovel = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotShovel")
+	if not slot_rod:
+		slot_rod = get_node_or_null("Root/HotbarMargin/HotbarContainer/Hotbar/SlotRod")
+
+	slots.clear()
+	if slot_hands:
+		slots.append(slot_hands)
+	if slot_shovel:
+		slots.append(slot_shovel)
+	if slot_rod:
+		slots.append(slot_rod)
 	
 	# Connect to event bus
 	GameEvents.tool_changed.connect(_on_tool_changed)
@@ -34,17 +48,36 @@ func _ready() -> void:
 	_on_tool_changed(GameState.current_tool)
 	_on_worms_count_changed(GameState.worms_count)
 	
-	prompt_panel.modulate.a = 0.0
-	notification_banner.modulate.a = 0.0
+	if is_instance_valid(prompt_panel):
+		prompt_panel.modulate.a = 0.0
+	if is_instance_valid(notification_banner):
+		notification_banner.modulate.a = 0.0
 
 
 func _on_tool_changed(tool_index: int) -> void:
+	if slots.is_empty():
+		return
+
 	for i in range(slots.size()):
 		var slot := slots[i]
+		if not is_instance_valid(slot):
+			continue
+		
 		var is_active := (i == tool_index)
 		
 		# Visual highlight on active slot
-		var style: StyleBoxFlat = slot.get_theme_stylebox("panel").duplicate()
+		var style: StyleBoxFlat
+		if slot.has_theme_stylebox_override("panel"):
+			style = slot.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+		elif slot.has_theme_stylebox("panel"):
+			style = slot.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+		else:
+			style = StyleBoxFlat.new()
+			style.corner_radius_bottom_left = 8
+			style.corner_radius_bottom_right = 8
+			style.corner_radius_top_left = 8
+			style.corner_radius_top_right = 8
+
 		if is_active:
 			style.border_color = Color(1.0, 0.82, 0.28, 1.0) # Bright golden amber
 			style.border_width_left = 3
@@ -65,23 +98,28 @@ func _on_tool_changed(tool_index: int) -> void:
 		slot.add_theme_stylebox_override("panel", style)
 
 	# Update description text
-	var tool_type: GameState.ToolType = tool_index as GameState.ToolType
-	var t_name: String = GameState.get_tool_name(tool_type)
-	var t_desc: String = GameState.TOOL_DESCRIPTIONS.get(tool_type, "")
-	tool_info_label.text = "%s — %s" % [t_name, t_desc]
+	if is_instance_valid(tool_info_label):
+		var tool_type: GameState.ToolType = tool_index as GameState.ToolType
+		var t_name: String = GameState.get_tool_name(tool_type)
+		var t_desc: String = GameState.TOOL_DESCRIPTIONS.get(tool_type, "")
+		tool_info_label.text = "%s — %s" % [t_name, t_desc]
 
 
 func _on_worms_count_changed(new_count: int) -> void:
-	worms_label.text = "x %d" % new_count
+	if is_instance_valid(worms_label):
+		worms_label.text = "x %d" % new_count
 	
 	# Little squash & stretch animation on bait counter
-	if is_inside_tree():
+	if is_instance_valid(worm_panel) and is_inside_tree():
 		var tween := create_tween()
 		tween.tween_property(worm_panel, "scale", Vector2(1.18, 1.18), 0.1).set_trans(Tween.TRANS_BACK)
 		tween.tween_property(worm_panel, "scale", Vector2(1.0, 1.0), 0.15)
 
 
 func _on_interaction_prompt_requested(prompt_text: String, _world_pos: Vector2, should_show: bool) -> void:
+	if not is_instance_valid(prompt_panel) or not is_instance_valid(prompt_label):
+		return
+
 	if prompt_tween and prompt_tween.is_valid():
 		prompt_tween.kill()
 
@@ -94,6 +132,9 @@ func _on_interaction_prompt_requested(prompt_text: String, _world_pos: Vector2, 
 
 
 func show_notification(message: String) -> void:
+	if not is_instance_valid(notification_banner) or not is_instance_valid(notification_label):
+		return
+
 	notification_label.text = message
 	if notif_tween and notif_tween.is_valid():
 		notif_tween.kill()
@@ -102,4 +143,3 @@ func show_notification(message: String) -> void:
 	notif_tween.tween_property(notification_banner, "modulate:a", 1.0, 0.2)
 	notif_tween.tween_interval(2.2)
 	notif_tween.tween_property(notification_banner, "modulate:a", 0.0, 0.4)
-

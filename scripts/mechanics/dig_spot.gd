@@ -17,7 +17,6 @@ enum SpotState {
 @onready var respawn_timer: Timer = $RespawnTimer
 
 var current_state: SpotState = SpotState.ACTIVE
-var bubble_cycle: float = 0.0
 
 
 func _ready() -> void:
@@ -28,15 +27,18 @@ func _ready() -> void:
 	respawn_timer.one_shot = true
 	respawn_timer.timeout.connect(_on_respawn_timeout)
 	
+	if bubble_timer:
+		bubble_timer.wait_time = randf_range(2.0, 3.5)
+		bubble_timer.timeout.connect(_on_bubble_timeout)
+	
 	queue_redraw()
 
 
-func _process(delta: float) -> void:
+func _on_bubble_timeout() -> void:
 	if current_state == SpotState.ACTIVE:
-		bubble_cycle += delta
-		if bubble_cycle >= 2.0:
-			bubble_cycle = 0.0
-			_emit_sand_bubble()
+		_emit_sand_bubble()
+		if bubble_timer:
+			bubble_timer.start(randf_range(2.0, 4.0))
 
 
 func get_interaction_type() -> String:

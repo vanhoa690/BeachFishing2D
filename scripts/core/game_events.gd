@@ -2,12 +2,25 @@ extends Node
 ## Central Event Bus for "Tide & Hook"
 ## Decouples gameplay systems, mechanics, and UI via typed signals.
 
+@warning_ignore("unused_signal")
 signal tool_changed(new_tool: int)
+
+@warning_ignore("unused_signal")
 signal worm_dug(amount: int, world_position: Vector2)
+
+@warning_ignore("unused_signal")
 signal worms_count_changed(total_worms: int)
+
+@warning_ignore("unused_signal")
 signal interaction_prompt_requested(text: String, world_pos: Vector2, show: bool)
+
+@warning_ignore("unused_signal")
 signal player_dig_started(target_position: Vector2)
+
+@warning_ignore("unused_signal")
 signal player_dig_finished()
+
+@warning_ignore("unused_signal")
 signal notification_banner(message: String)
 
 
@@ -42,3 +55,31 @@ func _register_action_keys(action_name: StringName, keys: Array[Key]) -> void:
 			event.physical_keycode = key
 			InputMap.action_add_event(action_name, event)
 
+
+# Public helper emitters
+func emit_tool_changed(new_tool: int) -> void:
+	tool_changed.emit(new_tool)
+
+
+func emit_worm_dug(amount: int, world_position: Vector2) -> void:
+	worm_dug.emit(amount, world_position)
+
+
+func emit_worms_count_changed(total_worms: int) -> void:
+	worms_count_changed.emit(total_worms)
+
+
+func emit_interaction_prompt(text: String, world_pos: Vector2, show: bool) -> void:
+	interaction_prompt_requested.emit(text, world_pos, show)
+
+
+func emit_player_dig_started(target_position: Vector2) -> void:
+	player_dig_started.emit(target_position)
+
+
+func emit_player_dig_finished() -> void:
+	player_dig_finished.emit()
+
+
+func emit_notification(message: String) -> void:
+	notification_banner.emit(message)

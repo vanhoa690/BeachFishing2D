@@ -1,0 +1,10 @@
+res://scenes/mechanics/floating_text.tscn
+res://scripts/core/game_events.gd
+res://scripts/core/game_state.gd
+res://scripts/mechanics/dig_spot.gd
+res://scripts/mechanics/floating_text.gd
+res://scripts/player/player.gd
+res://scripts/player/player_visuals.gd
+res://scripts/ui/hud.gd
+res://scripts/world/beach_main.gd
+res://scripts/world/beach_terrain.gd

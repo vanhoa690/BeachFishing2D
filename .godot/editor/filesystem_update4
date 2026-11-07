@@ -3,3 +3,4 @@ res://scripts/mechanics/fish_drying_rack.gd
 res://scripts/player/player.gd
 res://scripts/ui/hud.gd
 res://scripts/world/seagull.gd
+res://scripts/core/game_events.gd

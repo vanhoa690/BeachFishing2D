@@ -1,0 +1,361 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/market_modal.gd" id="1_market_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_panel"]
+bg_color = Color(0.12, 0.11, 0.1, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.72, 0.38, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_content"]
+bg_color = Color(0.08, 0.08, 0.08, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.28, 0.25, 0.22, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_item_card"]
+bg_color = Color(0.16, 0.15, 0.14, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.36, 0.3, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="MarketModal" type="CanvasLayer"]
+layer = 12
+script = ExtResource("1_market_script")
+
+[node name="Dimmer" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.05, 0.06, 0.65)
+
+[node name="Center" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(640, 440)
+layout_mode = 2
+pivot_offset = Vector2(320, 220)
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_panel")
+
+[node name="Margin" type="MarginContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="TitleVBox" type="VBoxContainer" parent="Center/Panel/Margin/VBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Center/Panel/Margin/VBox/HeaderHBox/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+theme_override_font_sizes/font_size = 18
+text = "🐟 Coastal Fish Market — Old Salt Finn"
+
+[node name="SubHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox/HeaderHBox/TitleVBox"]
+layout_mode = 2
+
+[node name="Subtitle" type="Label" parent="Center/Panel/Margin/VBox/HeaderHBox/TitleVBox/SubHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 0.8)
+theme_override_font_sizes/font_size = 11
+text = "Sell your catch for Sea Coins or stock up on prime tackle!"
+
+[node name="BalanceLabel" type="Label" parent="Center/Panel/Margin/VBox/HeaderHBox/TitleVBox/SubHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 13
+text = "🪙 0 Sea Coins"
+
+[node name="BtnClose" type="Button" parent="Center/Panel/Margin/VBox/HeaderHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 0
+text = "✕"
+
+[node name="HSeparator" type="HSeparator" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="TabsHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnTabSell" type="Button" parent="Center/Panel/Margin/VBox/TabsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+text = "🐟 Sell Fish"
+
+[node name="BtnTabBuy" type="Button" parent="Center/Panel/Margin/VBox/TabsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+text = "🎣 Buy Tackle"
+
+[node name="ContentPanel" type="PanelContainer" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_content")
+
+[node name="ContentMargin" type="MarginContainer" parent="Center/Panel/Margin/VBox/ContentPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="SellView" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="SellTopBar" type="HBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/SellView"]
+layout_mode = 2
+
+[node name="SellSummaryLabel" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/SellView/SellTopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.85, 0.75, 1)
+theme_override_font_sizes/font_size = 12
+text = "Basket Catches: 0 | Total Sell Value: 0 🪙"
+
+[node name="BtnSellAll" type="Button" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/SellView/SellTopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 28)
+layout_mode = 2
+text = "Sell All"
+
+[node name="Scroll" type="ScrollContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/SellView"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SellList" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/SellView/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="BuyView" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="WormCard" type="PanelContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_item_card")
+
+[node name="WormMargin" type="MarginContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/WormCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="WormHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/WormCard/WormMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Icon" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/WormCard/WormMargin/WormHBox"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "🪱"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoVBox" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/WormCard/WormMargin/WormHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/WormCard/WormMargin/WormHBox/InfoVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 13
+text = "Sand Worm (Live Bait)"
+
+[node name="Desc" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/WormCard/WormMargin/WormHBox/InfoVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "Freshly dug shoreline bait. Used on every cast to lure fish."
+
+[node name="WormOwnedLabel" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/WormCard/WormMargin/WormHBox/InfoVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+text = "Owned: 0 in bait pouch"
+
+[node name="BtnBuyWorm" type="Button" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/WormCard/WormMargin/WormHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Buy (5 🪙)"
+
+[node name="MasterBaitCard" type="PanelContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_item_card")
+
+[node name="MasterMargin" type="MarginContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/MasterBaitCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="MasterHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/MasterBaitCard/MasterMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Icon" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/MasterBaitCard/MasterMargin/MasterHBox"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "⭐"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoVBox" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/MasterBaitCard/MasterMargin/MasterHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/MasterBaitCard/MasterMargin/MasterHBox/InfoVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 13
+text = "Master Bait (Premium Chum)"
+
+[node name="Desc" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/MasterBaitCard/MasterMargin/MasterHBox/InfoVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "Secret mixture of crushed shellfish. Dramatically increases bite speed & rare species!"
+
+[node name="MasterBaitOwnedLabel" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/MasterBaitCard/MasterMargin/MasterHBox/InfoVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+text = "Owned: 0 in bait pouch"
+
+[node name="BtnBuyMasterBait" type="Button" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/MasterBaitCard/MasterMargin/MasterHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Buy (25 🪙)"
+
+[node name="RodCard" type="PanelContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_item_card")
+
+[node name="RodMargin" type="MarginContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/RodCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="RodHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/RodCard/RodMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Icon" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/RodCard/RodMargin/RodHBox"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "🎣"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoVBox" type="VBoxContainer" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/RodCard/RodMargin/RodHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/RodCard/RodMargin/RodHBox/InfoVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "Pro Fiber Rod (Upgraded Casting Gear)"
+
+[node name="Desc" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/RodCard/RodMargin/RodHBox/InfoVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "High-tensile carbon composite. Extends maximum casting range from 180px to 240px!"
+
+[node name="RodOwnedLabel" type="Label" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/RodCard/RodMargin/RodHBox/InfoVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+text = "Status: Bamboo Rod"
+
+[node name="BtnBuyRod" type="Button" parent="Center/Panel/Margin/VBox/ContentPanel/ContentMargin/BuyView/RodCard/RodMargin/RodHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Buy (150 🪙)"
+
+[node name="FooterHBox" type="HBoxContainer" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="HintLabel" type="Label" parent="Center/Panel/Margin/VBox/FooterHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "Tip: Sea Gulls cannot steal your coins or tackle gear!"
+
+[node name="BtnDone" type="Button" parent="Center/Panel/Margin/VBox/FooterHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 28)
+layout_mode = 2
+text = "Done [E / ESC]"
+

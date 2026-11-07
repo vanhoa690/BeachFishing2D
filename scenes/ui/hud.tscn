@@ -200,6 +200,35 @@ theme_override_colors/font_color = Color(0.5, 0.9, 1, 1)
 theme_override_font_sizes/font_size = 16
 text = "x 0"
 
+[node name="CoinPanel" type="PanelContainer" parent="Root/TopMargin/StatsBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 42)
+layout_mode = 2
+pivot_offset = Vector2(65, 21)
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="Root/TopMargin/StatsBox/CoinPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CoinIcon" type="Label" parent="Root/TopMargin/StatsBox/CoinPanel/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🪙"
+
+[node name="Title" type="Label" parent="Root/TopMargin/StatsBox/CoinPanel/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.85, 0.72, 1)
+theme_override_font_sizes/font_size = 14
+text = "Coins:"
+
+[node name="CoinCount" type="Label" parent="Root/TopMargin/StatsBox/CoinPanel/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "0"
+
 [node name="TopRightControls" type="HBoxContainer" parent="Root/TopMargin"]
 layout_mode = 2
 size_flags_horizontal = 8

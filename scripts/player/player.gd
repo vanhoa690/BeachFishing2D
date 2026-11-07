@@ -188,7 +188,8 @@ func _process_cast_charging(delta: float) -> void:
 	cast_charge_timer += delta * 2.2
 	# Smooth oscillating power curve between 0.0 and 1.0
 	cast_charge_ratio = (sin(cast_charge_timer - PI * 0.5) + 1.0) * 0.5
-	var cast_distance: float = lerp(60.0, 180.0, cast_charge_ratio)
+	var max_cast_dist: float = 240.0 if GameState.has_pro_rod else 180.0
+	var cast_distance: float = lerp(60.0, max_cast_dist, cast_charge_ratio)
 
 	var lateral_skew: float = 0.0
 	if abs(facing_direction.x) < 0.2:

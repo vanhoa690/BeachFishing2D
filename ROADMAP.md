@@ -104,16 +104,21 @@ The project follows a **Decoupled Event-Driven & Component-Centric Architecture*
 ---
 
 ### Phase 4: Cottage Inventory Hub, NPC Fisher Market, and P2P Trading Data Stubs
-- [ ] **Fisherman's Cottage Interior Hub**
-  - [ ] Cozy indoor scene transition (fireplace, fish storage chest, tackle workbench).
-  - [ ] Extended storage chest for preserving high-grade fish and surplus bait.
-- [ ] **NPC Fisher Market & Economy**
-  - [ ] Old Salt NPC shopkeeper with cozy dialogue tree.
-  - [ ] Sell caught/dried fish for Sea Coins; purchase upgraded rods, tackle, and lures.
-- [ ] **P2P Trading Data Stubs**
-  - [ ] Serializable trade packet schema for peer-to-peer catch exchange.
-  - [ ] Offline export/import ledger format for trade stubs.
-  - [ ] Inventory validation and anti-tamper checksums.
+- [x] **Fisherman's Coastal Cottage Hub & Safe Storage**
+  - [x] Fisherman's Cottage building with static collision (`scenes/world/cottage.tscn`).
+  - [x] Seagull-proof `SafeChest.tscn` with interactive modal `SafeChestModal.tscn` allowing 2-way fish transfers (Store All / Take All / Individual) into persistent `GameState.chest_storage`.
+- [x] **Economy & Currency System**
+  - [x] Global `EconomyManager` autoload tracking `sea_coins: int` with reactive `sea_coins_changed` event bus integration.
+  - [x] `HUD.tscn` top-left stats header with `CoinPanel` and animated bounce on earnings/expenditures.
+- [x] **NPC Fishmonger & Shop System (`FishMarketNPC.tscn`)**
+  - [x] Animated merchant NPC "Old Salt Finn" placed near the cottage on the beach.
+  - [x] Full-featured shop modal `MarketModal.tscn`:
+    - "Sell Fish" tab: lists basket catches, individual selling, and "Sell All" batch conversion into Sea Coins.
+    - "Buy Tackle" tab: Sand Worms (5 coins), Master Bait (25 coins, boost bite speed/rarity), and Pro Fiber Rod (150 coins, +60px casting range).
+    - Player movement locking and responsive UI animation.
+- [x] **P2P Multiplayer Market Data Stubs (`multiplayer_market_stub.gd`)**
+  - [x] Robust serializable JSON schema contract (`seller_id`, `item_id`, `item_data`, `price`, `listing_timestamp`).
+  - [x] Complete contract validation, serialization, mock market board, and pre-populated community listings for peer trading.
 
 ---
 

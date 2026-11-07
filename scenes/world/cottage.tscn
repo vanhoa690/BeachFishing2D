@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" uid="uid://c3q8f87v6y2x3" path="res://sprites/props/cottage.png" id="1_cottage_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_walls"]
+size = Vector2(115, 65)
+
+[node name="Cottage" type="StaticBody2D" groups=["building", "cottage"]]
+z_index = 2
+y_sort_enabled = true
+collision_mask = 2
+
+[node name="Shadow" type="Polygon2D" parent="."]
+position = Vector2(0, -10)
+color = Color(0.08, 0.12, 0.18, 0.38)
+polygon = PackedVector2Array(-80, -40, -60, -70, 40, -70, 75, -40, 85, 5, 50, 20, -50, 20, -80, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -85)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("1_cottage_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-12, -45)
+shape = SubResource("RectangleShape2D_walls")
+

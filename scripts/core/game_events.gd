@@ -45,6 +45,12 @@ signal fishing_ended(success: bool)
 signal fish_inventory_changed(current_inventory: Array)
 
 @warning_ignore("unused_signal")
+signal sea_coins_changed(total_coins: int)
+
+@warning_ignore("unused_signal")
+signal chest_storage_changed(chest_items: Array)
+
+@warning_ignore("unused_signal")
 signal drying_rack_interacted(rack_node: Node)
 
 

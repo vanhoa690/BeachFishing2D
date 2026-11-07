@@ -39,6 +39,43 @@ var fish_count: int:
 	get:
 		return fish_inventory.size()
 
+var master_bait_count: int = 0
+var has_pro_rod: bool = false
+var chest_storage: Array[Dictionary] = []
+
+var sea_coins: int:
+	get:
+		return EconomyManager.sea_coins if Engine.has_singleton("EconomyManager") or is_instance_valid(EconomyManager) else 0
+	set(value):
+		if Engine.has_singleton("EconomyManager") or is_instance_valid(EconomyManager):
+			EconomyManager.sea_coins = value
+
+
+func add_coins(amount: int) -> void:
+	if is_instance_valid(EconomyManager):
+		EconomyManager.add_coins(amount)
+
+
+func spend_coins(amount: int) -> bool:
+	if is_instance_valid(EconomyManager):
+		return EconomyManager.spend_coins(amount)
+	return false
+
+
+func add_fish_to_chest(entry: Dictionary) -> void:
+	if entry.is_empty():
+		return
+	chest_storage.append(entry)
+	GameEvents.chest_storage_changed.emit(chest_storage)
+
+
+func remove_fish_from_chest(index: int) -> Dictionary:
+	if index < 0 or index >= chest_storage.size():
+		return {}
+	var item: Dictionary = chest_storage.pop_at(index)
+	GameEvents.chest_storage_changed.emit(chest_storage)
+	return item
+
 const REGISTERED_FISH_PATHS: Array[String] = [
 	"res://data/fish/clownfish.tres",
 	"res://data/fish/blue_tang.tres",

@@ -11,6 +11,8 @@ extends CanvasLayer
 @onready var worm_panel: PanelContainer = %WormPanel
 @onready var fish_label: Label = %FishCount
 @onready var fish_panel: PanelContainer = %FishPanel
+@onready var coin_label: Label = %CoinCount
+@onready var coin_panel: PanelContainer = %CoinPanel
 @onready var fish_basket: FishBasket = %FishBasket
 
 @onready var btn_fullscreen: Button = %BtnFullscreen
@@ -58,6 +60,7 @@ func _ready() -> void:
 	GameEvents.tool_changed.connect(_on_tool_changed)
 	GameEvents.worms_count_changed.connect(_on_worms_count_changed)
 	GameEvents.fish_inventory_changed.connect(_on_fish_inventory_changed)
+	GameEvents.sea_coins_changed.connect(_on_coins_changed)
 	GameEvents.interaction_prompt_requested.connect(_on_interaction_prompt_requested)
 	GameEvents.notification_banner.connect(show_notification)
 
@@ -65,6 +68,7 @@ func _ready() -> void:
 	_on_tool_changed(GameState.current_tool)
 	_on_worms_count_changed(GameState.worms_count)
 	_on_fish_inventory_changed(GameState.fish_inventory)
+	_on_coins_changed(EconomyManager.sea_coins if Engine.has_singleton("EconomyManager") or is_instance_valid(EconomyManager) else 0)
 
 	# Click fish panel to open basket
 	if is_instance_valid(fish_panel):
@@ -170,6 +174,16 @@ func _on_fish_inventory_changed(inventory: Array) -> void:
 		var tween := create_tween()
 		tween.tween_property(fish_panel, "scale", Vector2(1.15, 1.15), 0.1).set_trans(Tween.TRANS_BACK)
 		tween.tween_property(fish_panel, "scale", Vector2.ONE, 0.15)
+
+
+func _on_coins_changed(new_coins: int) -> void:
+	if is_instance_valid(coin_label):
+		coin_label.text = "%d" % new_coins
+
+	if is_instance_valid(coin_panel) and is_inside_tree():
+		var tween := create_tween()
+		tween.tween_property(coin_panel, "scale", Vector2(1.15, 1.15), 0.1).set_trans(Tween.TRANS_BACK)
+		tween.tween_property(coin_panel, "scale", Vector2.ONE, 0.15)
 
 
 func _on_interaction_prompt_requested(prompt_text: String, _world_pos: Vector2, should_show: bool) -> void:

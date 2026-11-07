@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/mechanics/safe_chest.gd" id="1_chest"]
+[ext_resource type="Script" path="res://scripts/mechanics/chest_visual.gd" id="2_visual"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
+size = Vector2(28, 14)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 34.0
+
+[node name="SafeChest" type="StaticBody2D" groups=["interactable", "safe_storage"]]
+z_index = 2
+y_sort_enabled = true
+collision_mask = 2
+script = ExtResource("1_chest")
+
+[node name="ChestVisual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_solid")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_interact")
+
+[node name="CountBadge" type="Label" parent="."]
+visible = false
+offset_left = -24.0
+offset_top = -36.0
+offset_right = 24.0
+offset_bottom = -20.0
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "🔒 0"
+horizontal_alignment = 1
+
+[node name="PuffParticles" type="CPUParticles2D" parent="."]
+position = Vector2(0, -8)
+emitting = false
+amount = 8
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.8
+emission_shape = 1
+emission_sphere_radius = 6.0
+direction = Vector2(0, -1)
+spread = 50.0
+gravity = Vector2(0, -20)
+initial_velocity_min = 15.0
+initial_velocity_max = 35.0
+scale_amount_min = 1.2
+scale_amount_max = 2.2
+color = Color(0.9, 0.85, 0.7, 0.8)
+

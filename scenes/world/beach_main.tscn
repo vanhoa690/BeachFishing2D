@@ -9,8 +9,10 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="7_citho"]
 [ext_resource type="Script" path="res://scripts/ui/hud.gd" id="8_3s1h5"]
 [ext_resource type="PackedScene" path="res://scenes/mechanics/fish_drying_rack.tscn" id="9_rack"]
-[ext_resource type="PackedScene" path="res://scenes/mechanics/safe_storage_crate.tscn" id="10_crate"]
-[ext_resource type="PackedScene" path="res://scenes/world/seagull.tscn" id="11_seagull"]
+[ext_resource type="PackedScene" path="res://scenes/world/cottage.tscn" id="10_cottage"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/safe_chest.tscn" id="11_chest"]
+[ext_resource type="PackedScene" path="res://scenes/world/fish_market_npc.tscn" id="12_npc"]
+[ext_resource type="PackedScene" path="res://scenes/world/seagull.tscn" id="13_seagull"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jvhma"]
 size = Vector2(1600, 32)
@@ -124,16 +126,22 @@ y_sort_enabled = true
 [node name="ShorelineRack" parent="World" instance=ExtResource("9_rack")]
 position = Vector2(620, 420)
 
+[node name="Cottage" parent="World" instance=ExtResource("10_cottage")]
+position = Vector2(1060, 390)
+
 [node name="CottageRack" parent="World" instance=ExtResource("9_rack")]
-position = Vector2(1010, 410)
+position = Vector2(1190, 410)
 
-[node name="SafeCrate" parent="World" instance=ExtResource("10_crate")]
-position = Vector2(1050, 450)
+[node name="SafeChest" parent="World" instance=ExtResource("11_chest")]
+position = Vector2(1110, 435)
 
-[node name="Seagull1" parent="World" instance=ExtResource("11_seagull")]
+[node name="FishMarketNPC" parent="World" instance=ExtResource("12_npc")]
+position = Vector2(950, 430)
+
+[node name="Seagull1" parent="World" instance=ExtResource("13_seagull")]
 position = Vector2(700, 320)
 
-[node name="Seagull2" parent="World" instance=ExtResource("11_seagull")]
+[node name="Seagull2" parent="World" instance=ExtResource("13_seagull")]
 position = Vector2(1150, 600)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1067366785 instance=ExtResource("7_citho")]
